@@ -17,6 +17,7 @@
 - **UI组件库**: shadcn/ui (基于Tailwind CSS)
 - **样式**: Tailwind CSS
 - **类型检查**: TypeScript
+- **动画**: dotLottie (用于高质量矢量动画)
 - **内容管理**: WordPress/Ghost (用于新闻和博客内容)
 - **表单处理**: Tally.so (用于联系表单和职位申请)
 - **后端**: Next.js API Routes (用于集成第三方服务)
@@ -26,6 +27,10 @@
 ```
 enterprise-website/
 ├── public/                  # 静态资源
+│   ├── logo.svg             # 公司logo
+│   ├── woman.png            # IT Solutions业务图片
+│   ├── hardware.png         # Hardware业务图片
+│   └── whitehouse.png       # 新闻图片
 ├── src/
 │   ├── app/                 # Next.js App Router
 │   │   ├── api/             # API路由
@@ -40,15 +45,16 @@ enterprise-website/
 │   │   └── globals.css      # 全局样式
 │   ├── components/          # 组件
 │   │   ├── ui/              # UI组件 (shadcn)
-│   │   ├── layout/          # 布局组件
-│   │   │   ├── header.tsx   # 页头
-│   │   │   ├── footer.tsx   # 页脚
-│   │   │   └── ...
+│   │   │   └── lottie-animation.tsx # Lottie动画组件
 │   │   ├── home/            # 主页组件
+│   │   │   ├── hero.tsx     # 主页Hero部分
+│   │   │   ├── business-section.tsx # 主页核心业务部分
+│   │   │   └── news-section.tsx # 主页新闻部分
 │   │   ├── business/        # 业务页面组件
 │   │   ├── contact/         # 联系页面组件
 │   │   ├── career/          # 招聘页面组件
 │   │   └── shared/          # 共享组件
+│   │       └── header.tsx   # 页头组件
 │   ├── lib/                 # 工具函数和库
 │   │   ├── utils.ts         # 通用工具函数
 │   │   ├── wordpress.ts     # WordPress/Ghost API集成
@@ -63,13 +69,59 @@ enterprise-website/
 - 项目初始化
 - 安装基础依赖
 - 配置shadcn/ui
+- 创建基本页面结构
+- 实现页头组件
+- 实现首页Hero部分
+- 更新Hero部分使用动态GIF图像
+- 优化页面布局和视觉效果
+  - 改进响应式布局，使用12列网格系统
+  - 添加渐变文本效果
+  - 添加按钮悬停动画效果
+  - 优化组件间距和对齐
+  - 增强页头组件的视觉效果
+  - 移除大脑图像的悬停放大效果
+- 将静态GIF替换为Lottie动画
+  - 添加Lottie动画组件
+  - 集成CDN托管的dotLottie动画
+  - 优化动画组件，解决服务端渲染问题
+  - 从lottie-react迁移到@lottiefiles/dotlottie-react
+- UI调整
+  - 将"let's forge"文本颜色从渐变色改为黑色
+  - 移除"Click to continue"按钮
+- 实现首页核心业务部分
+  - 创建BusinessSection组件
+  - 实现业务卡片布局
+  - 添加响应式设计
+  - 集成实际业务图片(woman.png和hardware.png)
+- 实现首页新闻部分
+  - 创建NewsSection组件
+  - 实现新闻日期列表
+  - 实现新闻内容展示
+  - 添加导航按钮
+  - 优化响应式布局
+  - 实现新闻切换交互功能
+  - 集成实际新闻图片(whitehouse.png)
+  - 优化导航按钮位置，放置在图片右侧
+- 整体布局优化
+  - 调整各组件间的垂直间距，提升视觉节奏感
+  - 优化图片尺寸和位置，增强视觉平衡
+  - 改进文本和图片的对比度，提高可读性
+  - 添加微妙的阴影效果，增强层次感
+  - 优化移动端和桌面端的响应式表现
+- 用户体验优化
+  - 改进图片宽高比，使用16:9的宽屏比例，提升视觉美感
+  - 增强新闻部分的交互性，允许用户直接点击日期切换内容
+  - 优化鼠标滚轮交互，仅在鼠标悬停在新闻列表或内容区域时通过滚轮切换内容，其他区域保持正常页面滚动
+  - 添加平滑的新闻内容切换动画效果，使用framer-motion实现内容过渡动画
+  - 实现新闻浏览与页面滚动的无缝衔接，当滚动到最后一篇文章后继续滚动会自然过渡到页面滚动，同样当滚动到第一篇文章时向上滚动会自然过渡到页面向上滚动
+  - 增强新闻内容切换动画效果，添加交错动画序列，各元素以不同的延迟和动画参数呈现，创造层次感和精致的用户体验
+  - 优化新闻内容切换过程，实现真正无缝的内容过渡，避免切换时出现白屏，新内容在旧内容消失前就开始显示
 
 ### 进行中
-- 创建基本页面结构
-- 实现页头和页脚组件
+- 完善首页其他部分
+- 实现页脚组件
 
 ### 待完成
-- 实现主页
 - 实现业务页面
 - 实现联系页面和Tally.so表单集成
 - 实现招聘页面和Tally.so职位申请集成
