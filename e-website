@@ -1,0 +1,18 @@
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{0}: checkout: moving from develop to feature/homepage
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{1}: checkout: moving from homepage to develop
+[33m360dc63[m HEAD@{2}: commit: 首页0.5版本
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{3}: checkout: moving from develop to homepage
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{4}: checkout: moving from feat-homepage to develop
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{5}: checkout: moving from devlop to feat-homepage
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{6}: checkout: moving from feat-homepage to devlop
+[33mc4bda11[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/homepage[m[33m, [m[1;31morigin/feature/homepage[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat-homepage[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{7}: commit: feat:开发了首页前端
+[33m2c18f56[m HEAD@{8}: commit: feat:初步开发了主页的前端
+[33mec91dc0[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: reset: moving to ec91dc07e4cb724206da12a947c2eaf16b335e1c
+[33mfde2237[m HEAD@{10}: cherry-pick: feat: 添加首页Hero部分和页头组件
+[33mec91dc0[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{11}: checkout: moving from main to feat-homepage
+[33mec91dc0[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{12}: checkout: moving from ab7a26c3ce961ab3c0070f15519a29ef14584270 to main
+[33mab7a26c[m HEAD@{13}: commit: feat: 添加首页Hero部分和页头组件
+[33me2a2435[m HEAD@{14}: pull origin main --rebase (start): checkout e2a2435dce659efc460a246a8910aebcd5cc86b4
+[33mec91dc0[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{15}: commit: feat: 初始化企业官网项目框架
+[33mbe574c7[m HEAD@{16}: Branch: renamed refs/heads/master to refs/heads/main
+[33mbe574c7[m HEAD@{18}: commit (initial): Initial commit from Create Next App
