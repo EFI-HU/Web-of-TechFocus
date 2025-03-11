@@ -22,27 +22,31 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
+  --color-chart-0: var(--chart-0);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-radius: var(--radius);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-radius-sm: calc(var(--radius) - 4px);
+  --color-radius-md: calc(var(--radius) - 2px);
+  --color-radius-lg: var(--radius);
+  --color-radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
@@ -160,4 +164,61 @@ body {
 
 .image-hover-effect:hover {
   transform: scale(1.05);
+}
+
+/* 导航栏交互动效样式 */
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.nav-link-underline:hover::after {
+  width: 100%;
+}
+
+/* Federal按钮动效 */
+.federal-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.federal-button-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #9333EA;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+}
+
+.federal-button:hover .federal-button-bg {
+  transform: translateY(0);
+}
+
+/* 添加自定义字体样式，用于主页详细介绍部分 */
+.detail-text {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #333333;
+  font-family: var(--font-sans);
+}
+
+.detail-text-lg {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.875rem; /* 30px */
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #333333;
+  font-family: var(--font-sans);
 }

@@ -23,10 +23,17 @@ interface NewsItemProps {
 const NewsDateItem = ({ date, isActive, onClick }: NewsItemProps) => {
   return (
     <button 
-      className={`text-left py-3 px-2 transition-colors hover:text-black ${isActive ? 'text-black font-bold' : 'text-gray-500'}`}
+      className={`text-left py-2 transition-all duration-300 ease-in-out hover:text-black relative ${
+        isActive 
+          ? 'text-black font-medium tracking-tight pl-4' 
+          : 'text-gray-500 font-normal tracking-normal hover:pl-2'
+      }`}
       onClick={onClick}
     >
-      {date}
+      {isActive && (
+        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-black"></span>
+      )}
+      <span className="font-geist-sans">{date}</span>
     </button>
   );
 };
@@ -51,10 +58,10 @@ const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
       }}
     >
       <motion.div 
-        className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-8 bg-gray-100 shadow-sm"
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+        className="relative w-[90%] aspect-[16/9] rounded-2xl overflow-hidden mb-8 bg-gray-100 shadow-sm"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
         transition={{ 
           duration: 0.6,
           delay: 0.1, // 图片动画稍微延迟，创造交错效果
@@ -68,6 +75,7 @@ const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
             fill
             className="object-cover"
             priority
+            sizes="(max-width: 768px) 90vw, 70vw"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400">
@@ -99,8 +107,8 @@ const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
           ease: [0.22, 1, 0.36, 1]
         }}
       >
-        <p className="text-gray-600">{date} Publication</p>
-        <p className="text-gray-600">{readTime}</p>
+        <p className="detail-text-lg">{date} Publication</p>
+        <p className="detail-text-lg">{readTime}</p>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 15 }}
@@ -116,22 +124,28 @@ const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
           href="#" 
           className="inline-flex items-center text-black font-medium group"
         >
-          <div className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 group-hover:bg-gray-100 transition-colors">
-            <svg 
-              className="w-5 h-5" 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
+          <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 overflow-hidden">
+            <span className="relative z-10">
+              <svg 
+                className="w-5 h-5" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
           </div>
-          <span>Read more</span>
+          <span className="relative">
+            Read more
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+          </span>
         </Link>
       </motion.div>
     </motion.div>
@@ -179,56 +193,48 @@ export function NewsSection() {
   const newsItems: NewsItem[] = [
     {
       id: 1,
-      date: "March 24",
-      title: "AI Advancements in Healthcare",
-      publishDate: "March 24, 2025",
+      date: "March 21, 2025",
+      title: "TechFocus Launches New Website to Enhance Customer Engagement",
+      publishDate: "March 21, 2025",
       readTime: "3 min read",
-      imageSrc: null
+      imageSrc: "/news/website-launch.jpg"
     },
     {
       id: 2,
-      date: "March 23",
-      title: "Cloud Computing Trends",
-      publishDate: "March 23, 2025",
+      date: "May 3, 2023",
+      title: "TechFocus Improves Freight Transportation Efficiency in Smart Cities",
+      publishDate: "May 3, 2023",
       readTime: "4 min read",
-      imageSrc: null
+      imageSrc: "/news/smart-freight.jpg"
     },
     {
       id: 3,
-      date: "March 22",
-      title: "Introducing the Intelligence Age",
-      publishDate: "January 31, 2025",
-      readTime: "2 min read",
+      date: "December 4, 2021",
+      title: "TechFocus Model Integrated into Google Maps for Energy-Efficient Routing",
+      publishDate: "December 4, 2021",
+      readTime: "3 min read",
       imageSrc: "/whitehouse.png"
     },
     {
       id: 4,
-      date: "March 21",
-      title: "Cybersecurity Best Practices",
-      publishDate: "March 21, 2025",
-      readTime: "5 min read",
-      imageSrc: null
+      date: "January 4, 2020",
+      title: "TechFocus Secures $1.75M DOE Grant to Advance Electric Bus Deployment",
+      publishDate: "January 4, 2020",
+      readTime: "4 min read",
+      imageSrc: "/news/electric-bus.jpg"
     },
     {
       id: 5,
-      date: "March 15",
-      title: "The Future of Remote Work",
-      publishDate: "March 15, 2025",
-      readTime: "3 min read",
-      imageSrc: null
-    },
-    {
-      id: 6,
-      date: "February 02",
-      title: "Blockchain Technology Explained",
-      publishDate: "February 02, 2025",
-      readTime: "6 min read",
-      imageSrc: null
+      date: "March 1, 2017",
+      title: "TechFocus Officially Established to Drive Innovation in IT Solutions",
+      publishDate: "March 1, 2017",
+      readTime: "5 min read",
+      imageSrc: "/news/company-launch.jpg"
     }
   ];
 
   // 当前选中的新闻索引
-  const [activeIndex, setActiveIndex] = useState(2); // 默认选中第三项，即March 22
+  const [activeIndex, setActiveIndex] = useState(0); // 默认选中第一项，最新的新闻
   // 添加节流控制，防止滚轮事件触发过于频繁
   const [isScrolling, setIsScrolling] = useState(false);
   const newsListRef = useRef<HTMLDivElement>(null);
@@ -311,6 +317,9 @@ export function NewsSection() {
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   
+  // 添加一个状态来存储图片高度
+  const [imageHeight, setImageHeight] = useState(0);
+  
   // 监听activeNews变化，更新内容区域的高度
   useEffect(() => {
     if (contentRef.current) {
@@ -319,25 +328,38 @@ export function NewsSection() {
       // 获取当前内容的高度
       const height = Math.max(contentRef.current.scrollHeight, minHeight);
       setContentHeight(height);
+      
+      // 获取图片高度
+      const imageElement = contentRef.current.querySelector('.aspect-\\[16\\/9\\]');
+      if (imageElement) {
+        setImageHeight(imageElement.clientHeight);
+      }
     }
   }, [activeNews]);
 
   return (
-    <section className="w-full py-24 px-6 md:px-12 bg-white border-t border-gray-100">
+    <section className="w-full py-24 px-6 md:px-12 bg-white">
       <div className="container mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-16 md:mb-20">News</h2>
-        
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
-          {/* 左侧日期列表 */}
-          <div ref={newsListRef} className="md:col-span-2 flex flex-col space-y-1">
-            {newsItems.map((item, index) => (
-              <NewsDateItem 
-                key={item.id}
-                date={item.date} 
-                isActive={index === activeIndex}
-                onClick={() => setActiveIndex(index)}
-              />
-            ))}
+          {/* 左侧标题和日期列表 */}
+          <div className="md:col-span-3">
+            {/* News标题 */}
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 tracking-tight font-geist-sans relative inline-block">
+              News
+              <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-black"></span>
+            </h2>
+            
+            {/* 日期列表 */}
+            <div ref={newsListRef} className="flex flex-col space-y-5 text-base md:text-lg">
+              {newsItems.map((item, index) => (
+                <NewsDateItem 
+                  key={item.id}
+                  date={item.date} 
+                  isActive={index === activeIndex}
+                  onClick={() => setActiveIndex(index)}
+                />
+              ))}
+            </div>
           </div>
           
           {/* 中间新闻内容 */}
@@ -346,9 +368,11 @@ export function NewsSection() {
               <div 
                 className="md:col-span-12 relative"
                 ref={contentRef}
-                style={{ height: contentHeight > 0 ? `${contentHeight}px` : 'auto' }}
+                style={{ 
+                  height: contentHeight > 0 ? `${contentHeight}px` : 'auto'
+                }}
               >
-                <AnimatePresence mode="sync" initial={false}>
+                <AnimatePresence mode="sync" initial={true}>
                   <NewsContent 
                     key={activeNews.id}
                     title={activeNews.title}
@@ -360,8 +384,8 @@ export function NewsSection() {
               </div>
             </div>
             
-            {/* 右侧导航按钮 - 绝对定位在图片右侧 */}
-            <div className="absolute top-1/3 -right-16 flex flex-col gap-4">
+            {/* 右侧导航按钮 - 放在图片右侧居中 */}
+            <div className="absolute top-[10%] right-0 flex flex-col gap-4">
               <NavigationButton 
                 direction="up" 
                 onClick={handlePrevious}
@@ -374,9 +398,6 @@ export function NewsSection() {
               />
             </div>
           </div>
-          
-          {/* 占位列，保持布局平衡 */}
-          <div className="md:col-span-1"></div>
         </div>
       </div>
     </section>

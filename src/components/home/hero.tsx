@@ -21,13 +21,16 @@ export function Hero() {
           
           {/* 右侧网络图形 - 占据5列 */}
           <div className="relative h-[400px] md:h-[450px] w-full lg:col-span-5 flex items-center justify-center">
-            <div className="absolute w-[110%] md:w-[120%] h-[120%] -right-[5%] md:-right-[10%]">
-              <LottieAnimation 
-                src="https://lottie.host/a9a735de-cc7f-48c1-8970-848f14ed9db1/Z3AwwYLbUo.lottie"
-                className="w-full h-full"
-                loop={true}
-                autoplay={true}
-              />
+            {/* 使用固定的宽高比容器，确保动画在任何屏幕尺寸下都保持正确的比例 */}
+            <div className="absolute w-full h-full lg:w-[120%] lg:h-[120%] lg:-right-[10%]">
+              <div className="relative w-full h-full">
+                <LottieAnimation 
+                  src="https://lottie.host/a9a735de-cc7f-48c1-8970-848f14ed9db1/Z3AwwYLbUo.lottie"
+                  className="w-full h-full"
+                  loop={true}
+                  autoplay={true}
+                />
+              </div>
             </div>
           </div>
         </div>

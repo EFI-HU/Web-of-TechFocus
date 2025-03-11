@@ -19,28 +19,36 @@ const BusinessCard = ({ title, description, imageSrc }: BusinessCardProps) => {
         />
       </div>
       <h3 className="text-2xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-600 mb-8 leading-relaxed">{description}</p>
-      <Link 
-        href="#" 
-        className="inline-flex items-center text-black font-medium group mt-auto"
-      >
-        <div className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 group-hover:bg-gray-100 transition-colors">
-          <svg 
-            className="w-5 h-5" 
-            xmlns="http://www.w3.org/2000/svg" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5l7 7-7 7" />
-          </svg>
-        </div>
-        <span>Read more</span>
-      </Link>
+      <p className="detail-text-lg mb-8 leading-relaxed">{description}</p>
+      <div className="mt-auto">
+        <Link 
+          href="#" 
+          className="inline-flex items-center text-black font-medium group w-auto"
+        >
+          <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 overflow-hidden">
+            <span className="relative z-10">
+              <svg 
+                className="w-5 h-5" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
+          </div>
+          <span className="relative whitespace-nowrap">
+            Read more
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+          </span>
+        </Link>
+      </div>
     </div>
   );
 };
