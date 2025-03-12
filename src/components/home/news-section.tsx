@@ -46,9 +46,10 @@ interface NewsContentProps {
   date: string;
   readTime: string;
   imageSrc: string | null;
+  id: number;
 }
 
-const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
+const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) => {
   return (
     <motion.div 
       className="flex flex-col absolute inset-0"
@@ -124,7 +125,7 @@ const NewsContent = ({ title, date, readTime, imageSrc }: NewsContentProps) => {
         }}
       >
         <Link 
-          href="#" 
+          href={`/news?article=${id}`} 
           className="inline-flex items-center text-black font-medium group"
         >
           <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 overflow-hidden">
@@ -364,6 +365,7 @@ export function NewsSection() {
                     date={activeNews.publishDate}
                     readTime={activeNews.readTime}
                     imageSrc={activeNews.imageSrc}
+                    id={activeNews.id}
                   />
                 </AnimatePresence>
               </div>

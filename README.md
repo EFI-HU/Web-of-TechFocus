@@ -10,6 +10,7 @@
 - **业务 (Business)**: 公司提供的产品和服务介绍
 - **联系我们 (Contact)**: 联系表单和联系信息
 - **招聘 (Career)**: 职位列表和申请入口
+- **新闻 (News)**: 公司新闻和动态
 
 ## 技术栈
 
@@ -58,6 +59,8 @@ enterprise-website/
 │   │   ├── business/        # 业务页面组件
 │   │   ├── contact/         # 联系页面组件
 │   │   ├── career/          # 招聘页面组件
+│   │   ├── news/            # 新闻页面组件
+│   │   │   └── news-page.tsx # 新闻页面主组件
 │   │   └── shared/          # 共享组件
 │   │       └── header.tsx   # 页头组件
 │   ├── lib/                 # 工具函数和库
@@ -66,6 +69,65 @@ enterprise-website/
 │   │   └── tally.ts         # Tally.so API集成
 │   └── types/               # 类型定义
 └── ...
+```
+
+## 新闻图片模型
+
+新闻页面支持两种固定尺寸的图片模型，用于在文章内容中插入图片：
+
+### 1. Banner图片（长方形）
+
+- **类型**: `banner`
+- **尺寸**: 宽度1200px，使用相对定位和负margin突破父容器限制，高宽比为16:9
+- **用途**: 适合作为文章的主图或者展示宽屏场景、全景图像等
+- **位置**: 可以放在文章开头（默认）或指定段落后面
+
+### 2. Square图片（正方形）
+
+- **类型**: `square`
+- **尺寸**: 适中的宽度（max-w-xl，576px），高宽比为1:1
+- **用途**: 适合展示产品、人物、图标等需要等比例展示的内容
+- **位置**: 可以放在文章开头（默认）或指定段落后面
+
+### 图片数据结构
+
+```typescript
+interface NewsImage {
+  url: string;        // 图片URL
+  alt: string;        // 图片替代文本
+  type: 'banner' | 'square';  // 图片类型
+  position?: number;  // 可选，图片在内容中的位置（段落索引，从1开始）
+}
+
+interface NewsItem {
+  // 其他新闻属性...
+  images?: NewsImage[];  // 可选的图片数组
+}
+```
+
+### 使用示例
+
+```typescript
+// 示例：一篇带有一张banner图和一张square图的新闻
+{
+  id: '1',
+  title: '示例新闻标题',
+  // 其他属性...
+  images: [
+    {
+      url: '/news/example-banner.jpg',
+      alt: '示例banner图片',
+      type: 'banner'
+      // 未指定position，默认放在内容开头
+    },
+    {
+      url: '/news/example-square.jpg',
+      alt: '示例square图片',
+      type: 'square',
+      position: 3  // 放在第3段落后面
+    }
+  ]
+}
 ```
 
 ## 开发计划
@@ -135,10 +197,20 @@ enterprise-website/
   - 更新新闻数据，使用真实的公司新闻
   - 添加新闻图片
   - 优化新闻展示顺序，按时间倒序排列
+- 重新设计新闻页面
+  - 实现左侧日期导航栏
+  - 实现右侧文章内容展示
+  - 添加文章切换动画效果
+  - 优化移动端和桌面端的响应式布局
+- 新闻页面功能增强
+  - 添加两种固定尺寸的图片模型（banner和square）
+  - 支持在文章内容中的指定位置插入图片
+  - 优化图片展示效果，添加圆角和阴影
 
 ### 进行中
 - 完善首页其他部分
 - 实现页脚组件
+- 开发Ghost API集成，支持从CMS获取新闻内容和图片
 
 ### 待完成
 - 实现业务页面

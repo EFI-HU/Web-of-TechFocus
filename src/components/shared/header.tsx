@@ -53,11 +53,11 @@ export function Header() {
 
   // 在组件顶部添加 menuItems 数组（在 Header 组件内，useState 下方）
   const menuItems = [
-    { href: '/news', label: 'News' },
-    { href: '/products', label: 'Products' },
-    { href: '/contact', label: 'Contact' },
-    { href: '/career', label: 'Career' },
-    { href: '/federal', label: 'Federal' },
+    { href: '/', label: '首页' },
+    { href: '/news', label: '新闻动态' },
+    { href: '/business', label: '业务范围' },
+    { href: '/contact', label: '联系我们' },
+    { href: '/career', label: '加入我们' },
   ];
 
   return (
