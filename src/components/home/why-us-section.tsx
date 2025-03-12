@@ -61,7 +61,7 @@ export function WhyUsSection() {
   return (
     <section 
       ref={sectionRef} 
-      className="w-full py-28 px-6 md:px-12 bg-white"
+      className="w-full py-24 md:py-36 px-6 md:px-12 bg-white"
     >
       <motion.div 
         className="container mx-auto"

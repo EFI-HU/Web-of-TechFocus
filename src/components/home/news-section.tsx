@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -23,17 +23,20 @@ interface NewsItemProps {
 const NewsDateItem = ({ date, isActive, onClick }: NewsItemProps) => {
   return (
     <button 
-      className={`text-left py-2 transition-all duration-300 ease-in-out hover:text-black relative ${
+      className={`whitespace-nowrap py-2 px-4 md:px-0 transition-all duration-300 ease-in-out hover:text-black relative ${
         isActive 
-          ? 'text-black font-medium tracking-tight pl-4' 
+          ? 'text-black font-medium tracking-tight md:pl-4' 
           : 'text-gray-500 font-normal tracking-normal hover:pl-2'
       }`}
       onClick={onClick}
     >
       {isActive && (
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-black"></span>
+        <span className="absolute hidden md:block left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-black"></span>
       )}
       <span className="font-geist-sans">{date}</span>
+      {isActive && (
+        <span className="absolute md:hidden left-0 bottom-0 w-full h-0.5 bg-black"></span>
+      )}
     </button>
   );
 };
@@ -239,6 +242,9 @@ export function NewsSection() {
   const [isScrolling, setIsScrolling] = useState(false);
   const newsListRef = useRef<HTMLDivElement>(null);
   const newsContentRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const controls = useAnimation();
 
   // 处理上一个和下一个按钮点击
   const handlePrevious = () => {
@@ -253,62 +259,32 @@ export function NewsSection() {
     }
   };
 
-  // 处理鼠标滚轮事件
-  const handleWheel = (event: WheelEvent) => {
-    // 获取事件目标元素
-    const target = event.target as Node;
-    
-    // 检查鼠标是否在新闻列表或内容区域内
-    const isInNewsList = newsListRef.current?.contains(target);
-    const isInNewsContent = newsContentRef.current?.contains(target);
-    
-    // 只有当鼠标在新闻列表或内容区域内时才处理滚轮事件
-    if (isInNewsList || isInNewsContent) {
-      // 如果正在滚动中，则忽略此次滚轮事件
-      if (isScrolling) return;
-      
-      // 向上滚动，切换到上一条新闻
-      if (event.deltaY < 0) {
-        // 如果不是第一条新闻，则阻止默认滚动行为并切换到上一条
-        if (activeIndex > 0) {
-          event.preventDefault();
-          setIsScrolling(true);
-          handlePrevious();
-          
-          // 300毫秒后重置滚动状态
-          setTimeout(() => {
-            setIsScrolling(false);
-          }, 300);
-        }
-        // 如果已经是第一条新闻，则不阻止默认滚动，允许页面向上滚动
-      } 
-      // 向下滚动，切换到下一条新闻
-      else if (event.deltaY > 0) {
-        // 如果不是最后一条新闻，则阻止默认滚动行为并切换到下一条
-        if (activeIndex < newsItems.length - 1) {
-          event.preventDefault();
-          setIsScrolling(true);
-          handleNext();
-          
-          // 300毫秒后重置滚动状态
-          setTimeout(() => {
-            setIsScrolling(false);
-          }, 300);
-        }
-        // 如果已经是最后一条新闻，则不阻止默认滚动，允许页面向下滚动
-      }
-    }
+  // 处理触摸事件
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  // 添加和移除滚轮事件监听器
-  useEffect(() => {
-    // 使用捕获阶段来确保我们能在事件冒泡之前捕获它
-    document.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
     
-    return () => {
-      document.removeEventListener('wheel', handleWheel, { capture: true });
-    };
-  }, [activeIndex, isScrolling]); // 依赖项包括activeIndex和isScrolling
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && activeIndex < newsItems.length - 1) {
+      handleNext();
+    }
+    if (isRightSwipe && activeIndex > 0) {
+      handlePrevious();
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   // 当前选中的新闻
   const activeNews = newsItems[activeIndex];
@@ -349,8 +325,11 @@ export function NewsSection() {
               <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-black"></span>
             </h2>
             
-            {/* 日期列表 */}
-            <div ref={newsListRef} className="flex flex-col space-y-5 text-base md:text-lg">
+            {/* 日期列表 - 在手机端隐藏滚动条 */}
+            <div 
+              ref={newsListRef} 
+              className="flex md:flex-col overflow-x-auto scrollbar-hide md:overflow-x-visible pb-4 md:pb-0 space-x-6 md:space-x-0 md:space-y-5 text-base md:text-lg relative"
+            >
               {newsItems.map((item, index) => (
                 <NewsDateItem 
                   key={item.id}
@@ -363,7 +342,13 @@ export function NewsSection() {
           </div>
           
           {/* 中间新闻内容 */}
-          <div ref={newsContentRef} className="md:col-span-9 relative">
+          <div 
+            ref={newsContentRef} 
+            className="md:col-span-9 relative"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div 
                 className="md:col-span-12 relative"
@@ -384,8 +369,8 @@ export function NewsSection() {
               </div>
             </div>
             
-            {/* 右侧导航按钮 - 放在图片右侧居中 */}
-            <div className="absolute top-[10%] right-0 flex flex-col gap-4">
+            {/* 右侧导航按钮 - 仅在桌面端显示 */}
+            <div className="hidden md:absolute md:flex md:top-[10%] md:right-0 flex-col gap-4">
               <NavigationButton 
                 direction="up" 
                 onClick={handlePrevious}
@@ -400,6 +385,17 @@ export function NewsSection() {
           </div>
         </div>
       </div>
+
+      {/* 添加全局样式 */}
+      <style jsx global>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 } 

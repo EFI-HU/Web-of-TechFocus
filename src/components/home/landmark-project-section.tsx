@@ -1,9 +1,22 @@
 'use client';
 
 import { LottieAnimation } from '@/components/ui/lottie-animation';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+
+// 防抖函数
+function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null = null;
+  
+  return function(...args: Parameters<T>) {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
 
 export function LandmarkProjectSection() {
   // 使用 useRef 和 useState 替代 useInView
@@ -14,7 +27,12 @@ export function LandmarkProjectSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting);
+        // 使用防抖处理视图变化
+        const handleInViewChange = debounce((isInView: boolean) => {
+          setInView(isInView);
+        }, 50);
+        
+        handleInViewChange(entry.isIntersecting);
       },
       {
         threshold: 0.2,
@@ -41,9 +59,16 @@ export function LandmarkProjectSection() {
     offset: ["start end", "end start"]
   });
 
-  // 创建视差效果的变换
-  const phoneY = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const phoneRotate = useTransform(scrollYProgress, [0, 1], [5, -5]);
+  // 使用 useSpring 添加平滑过渡效果，防止抖动
+  const smoothScrollYProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // 创建视差效果的变换，使用平滑的滚动进度
+  const phoneY = useTransform(smoothScrollYProgress, [0, 1], [50, -50]);
+  const phoneRotate = useTransform(smoothScrollYProgress, [0, 1], [5, -5]);
 
   // 动画变体
   const containerVariants = {
@@ -53,6 +78,8 @@ export function LandmarkProjectSection() {
       transition: {
         staggerChildren: 0.2,
         delayChildren: 0.1,
+        ease: "easeInOut",
+        duration: 0.6
       },
     },
   };
@@ -72,7 +99,7 @@ export function LandmarkProjectSection() {
   return (
     <section 
       ref={sectionRef} 
-      className="w-full py-28 px-6 md:px-12 bg-white overflow-hidden"
+      className="w-full py-28 px-6 md:px-12 bg-white overflow-hidden will-change-transform"
     >
       <motion.div 
         className="container mx-auto"
@@ -84,15 +111,19 @@ export function LandmarkProjectSection() {
           {/* 左侧手机应用展示 */}
           <motion.div 
             ref={phoneRef}
-            className="relative h-[600px] flex items-center justify-center order-2 md:order-1"
+            className="relative h-[600px] flex items-center justify-center order-2 md:order-1 will-change-transform"
             variants={itemVariants}
             style={{
               y: phoneY,
               rotate: phoneRotate
             }}
+            transition={{
+              y: { type: "spring", stiffness: 100, damping: 30 },
+              rotate: { type: "spring", stiffness: 100, damping: 30 }
+            }}
           >
             {/* 直接显示Lottie动画，移除手机外框 */}
-            <div className="relative w-[280px] h-[560px] rounded-2xl overflow-hidden">
+            <div className="relative w-[320px] h-[560px] rounded-2xl overflow-hidden">
               <LottieAnimation
                 src="https://lottie.host/aa9f84b1-05a2-4487-a26a-a3ac3b182d9c/a1zkNj3sZU.lottie"
                 loop
@@ -102,7 +133,7 @@ export function LandmarkProjectSection() {
             
             {/* 装饰元素 - 增加视觉趣味性 */}
             <motion.div 
-              className="absolute -z-10 w-64 h-64 rounded-full bg-gradient-to-r from-purple-100 to-purple-200 opacity-60 blur-xl"
+              className="absolute -z-10 w-64 h-64 rounded-full bg-gradient-to-r from-purple-100 to-purple-200 opacity-60 blur-xl will-change-transform"
               animate={{ 
                 scale: [1, 1.2, 1],
                 rotate: [0, 10, 0],
@@ -111,13 +142,14 @@ export function LandmarkProjectSection() {
               transition={{ 
                 duration: 8, 
                 repeat: Infinity,
-                repeatType: "reverse" 
+                repeatType: "reverse",
+                ease: "easeInOut"
               }}
               style={{ top: '20%', left: '10%' }}
             />
             
             <motion.div 
-              className="absolute -z-10 w-48 h-48 rounded-full bg-gradient-to-r from-blue-100 to-cyan-200 opacity-60 blur-xl"
+              className="absolute -z-10 w-48 h-48 rounded-full bg-gradient-to-r from-blue-100 to-cyan-200 opacity-60 blur-xl will-change-transform"
               animate={{ 
                 scale: [1, 1.3, 1],
                 rotate: [0, -10, 0],
@@ -127,7 +159,8 @@ export function LandmarkProjectSection() {
                 duration: 10, 
                 repeat: Infinity,
                 repeatType: "reverse",
-                delay: 1
+                delay: 1,
+                ease: "easeInOut"
               }}
               style={{ bottom: '10%', right: '20%' }}
             />
