@@ -1,72 +1,82 @@
 /**
- * 新闻相关类型定义
+ * Type definitions for news-related interfaces
+ * 新闻相关接口的类型定义
  */
 
 /**
- * 新闻图片类型
+ * News image interface
+ * 新闻图片接口
  */
 export interface NewsImage {
   /**
-   * 图片URL
+   * URL of the image
+   * 图片的URL地址
    */
   url: string;
   
   /**
-   * 图片替代文本
+   * Alternative text for the image
+   * 图片的替代文本
    */
   alt: string;
   
   /**
-   * 图片类型
-   * - banner: 长方形图片，宽度1200px，使用相对定位和负margin突破父容器限制，高宽比为16:9
-   * - square: 正方形图片，适中的宽度（max-w-xl，576px），高宽比为1:1
+   * Type of the image (banner or square)
+   * 图片类型（横幅或方形）
    */
   type: 'banner' | 'square';
   
   /**
-   * 图片在内容中的位置
-   * - 如果不提供，则默认放在内容开头
-   * - 如果提供，则表示放在指定段落后面（段落索引从1开始）
+   * Optional position of the image in the content (paragraph index, starting from 1)
+   * 图片在内容中的可选位置（段落索引，从1开始）
    */
   position?: number;
 }
 
 /**
- * 新闻项类型
+ * News item interface
+ * 新闻项目接口
  */
 export interface NewsItem {
   /**
-   * 新闻ID
+   * Unique identifier for the news item
+   * 新闻项目的唯一标识符
    */
   id: string;
   
   /**
-   * 发布日期
+   * Publication date of the news item
+   * 新闻项目的发布日期
    */
   date: string;
   
   /**
-   * 新闻标题
+   * Title of the news item
+   * 新闻项目的标题
    */
   title: string;
   
   /**
-   * 新闻内容（段落数组）
+   * Content paragraphs of the news item
+   * 新闻项目的内容段落
    */
   content: string[];
   
   /**
-   * 作者
+   * Author of the news item
+   * 新闻项目的作者
    */
   author: string;
   
   /**
-   * 新闻摘要
+   * Brief summary of the news item
+   * 新闻项目的简短摘要
    */
   summary: string;
   
   /**
-   * 新闻图片
+   * Optional array of images associated with the news item
+   * 与新闻项目关联的可选图片数组
    */
   images?: NewsImage[];
 } 

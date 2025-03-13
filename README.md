@@ -19,7 +19,7 @@
 - **样式**: Tailwind CSS
 - **类型检查**: TypeScript
 - **动画**: dotLottie (用于高质量矢量动画)
-- **内容管理**: WordPress/Ghost (用于新闻和博客内容)
+- **内容管理**: Ghost (用于新闻和博客内容)
 - **表单处理**: Tally.so (用于联系表单和职位申请)
 - **后端**: Next.js API Routes (用于集成第三方服务)
 
@@ -73,7 +73,7 @@ enterprise-website/
 
 ## 新闻图片模型
 
-新闻页面支持两种固定尺寸的图片模型，用于在文章内容中插入图片：
+新闻页面支持一种固定尺寸的图片模型，用于在文章内容中插入图片：
 
 ### 1. Banner图片（长方形）
 
@@ -82,20 +82,13 @@ enterprise-website/
 - **用途**: 适合作为文章的主图或者展示宽屏场景、全景图像等
 - **位置**: 可以放在文章开头（默认）或指定段落后面
 
-### 2. Square图片（正方形）
-
-- **类型**: `square`
-- **尺寸**: 适中的宽度（max-w-xl，576px），高宽比为1:1
-- **用途**: 适合展示产品、人物、图标等需要等比例展示的内容
-- **位置**: 可以放在文章开头（默认）或指定段落后面
 
 ### 图片数据结构
 
 ```typescript
 interface NewsImage {
   url: string;        // 图片URL
-  alt: string;        // 图片替代文本
-  type: 'banner' | 'square';  // 图片类型
+  alt: string;        // 图片替代文本 
   position?: number;  // 可选，图片在内容中的位置（段落索引，从1开始）
 }
 
@@ -117,13 +110,11 @@ interface NewsItem {
     {
       url: '/news/example-banner.jpg',
       alt: '示例banner图片',
-      type: 'banner'
       // 未指定position，默认放在内容开头
     },
     {
       url: '/news/example-square.jpg',
       alt: '示例square图片',
-      type: 'square',
       position: 3  // 放在第3段落后面
     }
   ]
@@ -211,10 +202,10 @@ interface NewsItem {
 - 完善首页其他部分
 - 实现页脚组件
 - 开发Ghost API集成，支持从CMS获取新闻内容和图片
+- 实现联系页面和Tally.so表单集成
 
 ### 待完成
 - 实现业务页面
-- 实现联系页面和Tally.so表单集成
 - 实现招聘页面和Tally.so职位申请集成
 - 实现WordPress/Ghost内容集成
 - 部署上线
@@ -240,44 +231,3 @@ npm run build
 ```bash
 npm start
 ```
-
-## 贡献指南
-
-请遵循项目的编码规范和Git提交规范.
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

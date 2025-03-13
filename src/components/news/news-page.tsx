@@ -148,7 +148,7 @@ export function NewsPage() {
     if (!selectedNews.images || selectedNews.images.length === 0) {
       // 如果没有图片，直接渲染所有段落
       return selectedNews.content.map((paragraph, index) => (
-        <p key={index} className="mb-6 text-black leading-loose text-left text-lg mx-auto max-w-3xl">
+        <p key={index} className="mb-6 text-black leading-loose text-left text-xl mx-auto max-w-3xl">
           {paragraph}
         </p>
       ));
@@ -197,7 +197,7 @@ export function NewsPage() {
     // 然后按顺序添加内容和指定位置的图片
     selectedNews.content.forEach((paragraph, index) => {
       result.push(
-        <p key={`p-${index}`} className="mb-6 text-black leading-loose text-left text-lg mx-auto max-w-3xl">
+        <p key={`p-${index}`} className="mb-6 text-black leading-loose text-left text-xl mx-auto max-w-3xl">
           {paragraph}
         </p>
       );
