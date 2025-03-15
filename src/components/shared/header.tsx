@@ -163,8 +163,8 @@ export function Header() {
                     priority
                   />
                 </div>
-                <span className={`text-[23px] font-black text-[#111] tracking-wider relative inline-block uppercase ${orbitron.className}`}>
-                  TECH<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-gradient">FOCUS</span>
+                <span className={`text-[20px] font-black text-[#111] tracking-wider relative inline-block uppercase ${orbitron.className}`}>
+                  TECH<span className="text-black font-black">FOCUS</span>
                 </span>
               </Link>
             </div>
@@ -215,8 +215,8 @@ export function Header() {
                 News
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/products" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
-                Products
+              <Link href="/business" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+                Business
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link href="/contact" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
@@ -229,7 +229,7 @@ export function Header() {
               </Link>
               <Link 
                 href="/federal" 
-                className="ml-2 px-5 py-2.5 bg-[#111] text-white rounded-full text-[16px] font-medium relative overflow-hidden group"
+                className="ml-2 px-4 py-2 bg-[#111] text-white rounded-full text-[14px] font-medium relative overflow-hidden group"
               >
                 <span className="relative z-10">Federal</span>
                 <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
