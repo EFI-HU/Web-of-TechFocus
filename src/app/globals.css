@@ -381,3 +381,13 @@ body {
 .font-racingpower {
   font-family: 'RacingPower', cursive;
 }
+
+/* 添加滚动条隐藏样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}

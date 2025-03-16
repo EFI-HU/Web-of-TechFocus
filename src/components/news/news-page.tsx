@@ -132,11 +132,6 @@ export function NewsPage() {
             ))}
           </div>
           
-          {/* 只在有作者信息时显示作者部分 */}
-          {news.author && (
-            <p className="text-right text-gray-600 mt-8 mb-16 max-w-4xl mx-auto">{news.author}</p>
-          )}
-          
           {/* 文章底部空白区域 */}
           <div className="h-32 md:h-40"></div>
         </>
@@ -229,11 +224,6 @@ export function NewsPage() {
                 );
               }
             })}
-            
-            {/* 只在有作者信息时显示作者部分 */}
-            {news.author && (
-              <p className="text-center text-gray-600 mt-8 mb-16">{news.author}</p>
-            )}
           </div>
           
           {/* 文章底部空白区域 */}
@@ -326,11 +316,6 @@ export function NewsPage() {
             </div>
           )}
           
-          {/* 只在有作者信息时显示作者部分 */}
-          {news.author && !news.twoColumnLayout && (
-            <p className="text-right text-gray-600 mt-10 mb-16 max-w-4xl mx-auto">{news.author}</p>
-          )}
-          
           {/* 文章底部空白区域 */}
           <div className="h-32 md:h-40"></div>
         </>
@@ -383,11 +368,6 @@ export function NewsPage() {
                 </p>
               );
             })}
-            
-            {/* 只在有作者信息时显示作者部分 */}
-            {news.author && (
-              <p className="text-right text-gray-600 mt-10 mb-16">{news.author}</p>
-            )}
           </div>
           
           {/* 文章底部空白区域 */}
@@ -477,9 +457,6 @@ export function NewsPage() {
                     <blockquote className="text-2xl font-medium text-center mb-4 max-w-3xl mx-auto leading-relaxed">
                       {paragraph}
                     </blockquote>
-                    {news.author && (
-                      <p className="text-center text-gray-600">{news.author}</p>
-                    )}
                   </div>
                 );
               }
@@ -492,16 +469,6 @@ export function NewsPage() {
                 );
               }
             })}
-            
-            {/* 只在有作者信息时显示作者部分，且不是第五篇文章的第三段引用 */}
-            {news.author && !isOfficiallyEstablished && (
-              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
-            )}
-            
-            {/* 第五篇文章的作者信息 */}
-            {news.author && isOfficiallyEstablished && (
-              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
-            )}
           </div>
           
           {/* 第五篇文章的Core Business部分 */}

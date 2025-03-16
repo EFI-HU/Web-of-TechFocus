@@ -1,5 +1,6 @@
 'use client';
 
+import { newsData } from '@/data/news-data'; // 导入新闻数据
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,6 +61,19 @@ interface NewsContentProps {
 }
 
 const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) => {
+  // 获取对应的新闻数据项
+  const newsItem = newsData.find(item => parseInt(item.id) === id);
+  
+  // 获取完整标题
+  let fullTitle = title;
+  if (newsItem?.specialLayout?.fullTitle) {
+    fullTitle = newsItem.specialLayout.fullTitle;
+  } else if (newsItem?.videoLayout?.fullTitle) {
+    fullTitle = newsItem.videoLayout.fullTitle;
+  } else if (newsItem?.imageLayout?.fullTitle) {
+    fullTitle = newsItem.imageLayout.fullTitle;
+  }
+  
   return (
     <motion.div 
       className="flex flex-col absolute inset-0"
@@ -108,7 +122,7 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
           ease: [0.22, 1, 0.36, 1]
         }}
       >
-        {title}
+        {fullTitle}
       </motion.h3>
       <motion.div 
         className="flex flex-col space-y-1 mb-5"
@@ -202,49 +216,43 @@ const NavigationButton = ({ direction, onClick, disabled = false }: NavigationBu
 };
 
 export function NewsSection() {
-  // 新闻数据
-  const newsItems: NewsItem[] = [
-    {
-      id: 1,
-      date: "March 21, 2025",
-      title: "TechFocus Launches New Website to Enhance Customer Engagement",
-      publishDate: "March 21, 2025",
-      readTime: "3 min read",
-      imageSrc: "/news/website-launch.jpg"
-    },
-    {
-      id: 2,
-      date: "May 3, 2023",
-      title: "TechFocus Improves Freight Transportation Efficiency in Smart Cities",
-      publishDate: "May 3, 2023",
-      readTime: "4 min read",
-      imageSrc: "/news/smart-freight.jpg"
-    },
-    {
-      id: 3,
-      date: "December 4, 2021",
-      title: "TechFocus Model Integrated into Google Maps for Energy-Efficient Routing",
-      publishDate: "December 4, 2021",
-      readTime: "3 min read",
-      imageSrc: "/whitehouse.png"
-    },
-    {
-      id: 4,
-      date: "January 4, 2020",
-      title: "TechFocus Secures $1.75M DOE Grant to Advance Electric Bus Deployment",
-      publishDate: "January 4, 2020",
-      readTime: "4 min read",
-      imageSrc: "/news/electric-bus.jpg"
-    },
-    {
-      id: 5,
-      date: "March 1, 2017",
-      title: "TechFocus Officially Established to Drive Innovation in IT Solutions",
-      publishDate: "March 1, 2017",
-      readTime: "5 min read",
-      imageSrc: "/news/company-launch.jpg"
+  // 从newsData转换新闻数据
+  const newsItems: NewsItem[] = newsData.map(item => {
+    // 确定图片来源
+    let imageSrc: string | null = null;
+    
+    // 对于'Routing'和'Officially Established'两个标签，使用空白占位符
+    if (item.title === 'Routing' || item.title === 'Officially Established') {
+      imageSrc = null;
+    } 
+    // 对于有图片的新闻，使用第一张图片
+    else if (item.images && item.images.length > 0) {
+      imageSrc = item.images[0].url;
+    } 
+    // 对于有视频的新闻，使用视频海报
+    else if (item.videos && item.videos.length > 0 && item.videos[0].posterUrl) {
+      imageSrc = item.videos[0].posterUrl;
     }
-  ];
+    
+    // 获取格式化的日期
+    let formattedDate = item.date;
+    if (item.specialLayout?.date) {
+      formattedDate = item.specialLayout.date;
+    } else if (item.videoLayout?.date) {
+      formattedDate = item.videoLayout.date;
+    } else if (item.imageLayout?.date) {
+      formattedDate = item.imageLayout.date;
+    }
+    
+    return {
+      id: parseInt(item.id),
+      date: formattedDate,
+      title: item.title,
+      publishDate: formattedDate,
+      readTime: `${Math.ceil(item.content.join(' ').length / 1000)} min read`,
+      imageSrc: imageSrc
+    };
+  });
 
   // 当前选中的新闻索引
   const [activeIndex, setActiveIndex] = useState(0); // 默认选中第一项，最新的新闻

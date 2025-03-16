@@ -7,8 +7,6 @@
  * 
  * - Hero section (main banner)
  * - 主横幅部分
- * - Business section (core services)
- * - 业务部分（核心服务）
  * - News section (company updates)
  * - 新闻部分（公司动态）
  * - Why Us section (company advantages)
@@ -21,7 +19,6 @@
  * @component
  */
 
-import { BusinessSection } from '@/components/home/business-section';
 import { Hero } from '@/components/home/hero';
 import { LandmarkProjectSection } from '@/components/home/landmark-project-section';
 import { NewsSection } from '@/components/home/news-section';
@@ -35,10 +32,6 @@ export default function Home() {
         {/* Hero Section - Main banner area */}
         {/* 主横幅区域 */}
         <Hero />
-        
-        {/* Business Section - Core services showcase */}
-        {/* 核心业务展示区域 */}
-        <BusinessSection />
         
         {/* News Section - Latest company updates */}
         {/* 最新公司动态区域 */}
