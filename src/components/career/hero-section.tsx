@@ -182,16 +182,16 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.9 }}
         >
           <button 
-            onClick={() => window.location.href = '/career/details'}
+            onClick={() => window.open('/PDF/Career at TechFocus.pdf', '_blank')}
             className="px-8 py-3 border border-white text-white rounded-full text-sm font-medium tracking-wider uppercase transition-colors duration-300 hover:bg-white hover:text-black"
           >
-            查看职位详情
+            Explore Our Company
           </button>
           <button 
-            onClick={() => window.location.href = '/career/apply'}
-            className="px-8 py-3 bg-transparent border border-white text-white rounded-full text-sm font-medium tracking-wider uppercase transition-all duration-300 shadow-md hover:bg-white hover:text-black"
+            onClick={() => window.open('https://tally.so/r/mZDgja', '_blank')}
+            className="px-8 py-3 border border-white text-white rounded-full text-sm font-medium tracking-wider uppercase transition-colors duration-300 hover:bg-white hover:text-black"
           >
-            立即投递简历
+            Apply Now
           </button>
         </motion.div>
       </motion.div>

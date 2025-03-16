@@ -67,12 +67,93 @@ enterprise-website/
 │   │   │   └── news-page.tsx # 新闻页面主组件
 │   │   └── shared/          # 共享组件
 │   │       └── header.tsx   # 页头组件
+│   ├── data/                # 数据文件
+│   │   └── news-data.ts     # 新闻数据
 │   ├── lib/                 # 工具函数和库
 │   │   ├── utils.ts         # 通用工具函数
 │   │   ├── wordpress.ts     # WordPress/Ghost API集成
 │   │   └── tally.ts         # Tally.so API集成
 │   └── types/               # 类型定义
+│       └── news.ts          # 新闻相关类型定义
 └── ...
+```
+
+## 新闻数据模型
+
+新闻页面支持两种数据模型：
+
+### 1. 标准新闻模型
+
+标准新闻项包含以下字段：
+- `id`: 唯一标识符
+- `date`: 发布日期
+- `title`: 标题
+- `summary`: 摘要
+- `content`: 内容段落数组
+- `author`: 作者
+- `images`: 可选的图片数组
+
+### 2. 特殊布局新闻模型
+
+特殊布局新闻项除了包含标准字段外，还包含一个额外的 `specialLayout` 字段，用于自定义布局：
+- `location`: 发布地点
+- `date`: 格式化日期（用于显示）
+- `fullTitle`: 完整标题（可包含换行标记 `<br />`）
+- `highlights`: 重点内容数组
+
+### 图片数据结构
+
+```typescript
+interface NewsImage {
+  url: string;        // 图片URL
+  alt: string;        // 图片替代文本 
+  type: 'banner' | 'square'; // 图片类型
+  position?: number;  // 可选，图片在内容中的位置（段落索引，从1开始）
+}
+```
+
+### 使用示例
+
+新闻数据存储在 `src/data/news-data.ts` 文件中，使用 TypeScript 接口确保类型安全。新闻组件会自动从该文件加载数据并渲染。
+
+```typescript
+// 标准新闻项示例
+{
+  id: '2',
+  date: '2023-05-03',
+  title: 'Smart Cities',
+  summary: '新的AI驱动平台优化城市货运，减少能源消耗和运营成本。',
+  content: [
+    '第一段内容...',
+    '第二段内容...'
+  ],
+  author: 'TechFocus Media Team',
+  images: [
+    {
+      url: '/news/smart-freight.jpg',
+      alt: '智能货运系统',
+      type: 'banner',
+      position: 1  // 放在第1段落后面
+    }
+  ]
+}
+
+// 特殊布局新闻项示例
+{
+  id: '1',
+  // 标准字段...
+  specialLayout: {
+    location: 'Boulder, CO',
+    date: 'March 21, 2025',
+    fullTitle: 'We Launches New<br />Website to Enhance<br />Customer Engagement',
+    highlights: [
+      '现代化、易于导航的界面。',
+      '展示成功项目的案例研究。',
+      '行业新闻和研究的专用资源中心。',
+      'TechFocus IT解决方案和服务的详细见解。'
+    ]
+  }
+}
 ```
 
 ## 新闻图片模型
@@ -250,6 +331,11 @@ interface NewsItem {
   - 实现点击导航平滑滚动到对应章节功能
   - 实现第二屏随滚动从底部滑入覆盖第一屏的效果
   - 优化移动端和桌面端的响应式布局
+- 新闻数据管理优化
+  - 创建独立的新闻数据文件 (news-data.ts)
+  - 定义清晰的类型接口 (news.ts)
+  - 支持特殊布局配置
+  - 实现数据与UI的分离，提高代码可维护性
 
 ### 进行中
 - 完善首页其他部分

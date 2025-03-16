@@ -36,8 +36,12 @@ const geistMono = Geist_Mono({
 // Define global metadata for the application
 // 定义应用程序的全局元数据
 export const metadata: Metadata = {
-  title: "TechFocus - 企业官网",
+  title: "TechFocus",
   description: "TechFocus是一家专注于IT驱动的集体智能解决方案的公司",
+  icons: {
+    icon: '/logo-removebg-preview.png',
+    apple: '/logo-removebg-preview.png',
+  },
 };
 
 /**

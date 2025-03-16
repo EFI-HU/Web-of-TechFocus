@@ -75,7 +75,7 @@ export function WhyUsSection() {
           variants={itemVariants}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-2">
-            Why <span className="text-[#9333EA]">us</span>
+            Why <span className="text-black">us</span>
           </h2>
         </motion.div>
 
@@ -88,11 +88,11 @@ export function WhyUsSection() {
           >
             <div className="flex flex-col space-y-2">
               <h3 className="text-3xl font-bold text-gray-900">Dr. Lijuan Wang</h3>
-              <p className="text-xl font-medium text-[#9333EA]">CEO of TechFocus LLC</p>
+              <p className="text-xl font-medium text-black">CEO of TechFocus LLC</p>
               <p className="text-xl font-medium text-gray-700">AI & Federal IT Solutions Leader</p>
             </div>
             
-            <div className="w-16 h-1 bg-[#9333EA] rounded-full"></div>
+            <div className="w-16 h-1 bg-black rounded-full"></div>
             
             <p className="detail-text-lg leading-relaxed">
               Visionary CEO leading a Woman-Owned SBA 8(a) certified firm specializing in AI, cloud computing, and IT solutions for federal agencies.
@@ -100,19 +100,19 @@ export function WhyUsSection() {
             
             <ul className="space-y-4 detail-text-lg">
               <li className="flex items-start">
-                <span className="text-[#9333EA] mr-2">•</span>
+                <span className="text-black mr-2">•</span>
                 <span>Drove TechFocus LLC to secure $2M (2023) and $4M (2024) in federal contracts through AI innovation.</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#9333EA] mr-2">•</span>
+                <span className="text-black mr-2">•</span>
                 <span>Pioneered the "Most Fuel-Efficient Route" feature at NREL, adopted by Google Maps, slashing 2M tons of carbon emissions.</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#9333EA] mr-2">•</span>
+                <span className="text-black mr-2">•</span>
                 <span>Ph.D. in Mechanical Engineering with expertise in machine learning and federal tech strategy.</span>
               </li>
               <li className="flex items-start">
-                <span className="text-[#9333EA] mr-2">•</span>
+                <span className="text-black mr-2">•</span>
                 <span>Recognized ARPA-E reviewer and trusted partner in government IT optimization.</span>
               </li>
             </ul>
@@ -122,12 +122,11 @@ export function WhyUsSection() {
             >
               <Link 
                 href="/about" 
-                className="inline-flex items-center px-6 py-3 bg-black text-white rounded-full group relative overflow-hidden"
+                className="inline-flex items-center group"
               >
-                <span className="relative z-10 flex items-center font-medium">
-                  Read more
+                <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-400 mr-3 text-gray-700 transition-colors duration-300 group-hover:bg-black group-hover:text-white">
                   <svg 
-                    className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" 
+                    className="w-5 h-5" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 24 24" 
                     fill="none" 
@@ -139,8 +138,11 @@ export function WhyUsSection() {
                     <path d="M5 12h14" />
                     <path d="M12 5l7 7-7 7" />
                   </svg>
+                </div>
+                <span className="relative font-medium text-gray-700">
+                  Read more
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-700 transition-all duration-300 group-hover:w-full group-hover:bg-black"></span>
                 </span>
-                <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
               </Link>
             </motion.div>
           </motion.div>

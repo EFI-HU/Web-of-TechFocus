@@ -22,22 +22,32 @@ interface NewsItemProps {
 
 const NewsDateItem = ({ date, isActive, onClick }: NewsItemProps) => {
   return (
-    <button 
-      className={`whitespace-nowrap py-2 px-4 md:px-0 transition-all duration-300 ease-in-out hover:text-black relative ${
-        isActive 
-          ? 'text-black font-medium tracking-tight md:pl-4' 
-          : 'text-gray-500 font-normal tracking-normal hover:pl-2'
-      }`}
+    <motion.button 
+      className={`whitespace-nowrap py-2 transition-all duration-300 ease-in-out relative w-full text-center`}
       onClick={onClick}
+      whileHover={{ 
+        scale: 1.05,
+        transition: { duration: 0.2 }
+      }}
+      animate={{
+        scale: isActive ? 1.1 : 1,
+        opacity: isActive ? 1 : 0.7,
+        y: 0
+      }}
+      transition={{
+        scale: { duration: 0.3 },
+        opacity: { duration: 0.3 }
+      }}
     >
-      {isActive && (
-        <span className="absolute hidden md:block left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-black"></span>
-      )}
-      <span className="font-geist-sans">{date}</span>
+      <span className={`font-geist-sans transition-all duration-300 inline-block ${
+        isActive 
+          ? 'text-black font-medium tracking-tight text-lg md:text-xl' 
+          : 'text-gray-500 font-normal tracking-normal text-base'
+      }`}>{date}</span>
       {isActive && (
         <span className="absolute md:hidden left-0 bottom-0 w-full h-0.5 bg-black"></span>
       )}
-    </button>
+    </motion.button>
   );
 };
 
@@ -62,7 +72,7 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
       }}
     >
       <motion.div 
-        className="relative w-[90%] aspect-[16/9] rounded-2xl overflow-hidden mb-8 bg-gray-100 shadow-sm"
+        className="relative w-[98%] md:w-[98%] lg:w-full aspect-[16/10] md:aspect-[16/8] lg:aspect-[16/7] rounded-2xl overflow-hidden mb-6 bg-gray-100 shadow-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -79,7 +89,7 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
             fill
             className="object-cover"
             priority
-            sizes="(max-width: 768px) 90vw, 70vw"
+            sizes="(max-width: 768px) 98vw, (max-width: 1200px) 90vw, 85vw"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400">
@@ -88,7 +98,7 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
         )}
       </motion.div>
       <motion.h3 
-        className="text-3xl font-bold mb-4"
+        className="text-2xl md:text-3xl font-bold mb-3"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -15 }}
@@ -101,7 +111,7 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
         {title}
       </motion.h3>
       <motion.div 
-        className="flex flex-col space-y-1 mb-8"
+        className="flex flex-col space-y-1 mb-5"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -15 }}
@@ -126,29 +136,26 @@ const NewsContent = ({ title, date, readTime, imageSrc, id }: NewsContentProps) 
       >
         <Link 
           href={`/news?article=${id}`} 
-          className="inline-flex items-center text-black font-medium group"
+          className="inline-flex items-center text-gray-700 font-medium group"
         >
-          <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 mr-3 overflow-hidden">
-            <span className="relative z-10">
-              <svg 
-                className="w-5 h-5" 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14" />
-                <path d="M12 5l7 7-7 7" />
-              </svg>
-            </span>
-            <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
+          <div className="relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-400 mr-3 text-gray-700 transition-colors duration-300 group-hover:bg-black group-hover:text-white">
+            <svg 
+              className="w-4 h-4 md:w-5 md:h-5" 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
           </div>
-          <span className="relative">
+          <span className="relative font-medium">
             Read more
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-700 transition-all duration-300 group-hover:w-full group-hover:bg-black"></span>
           </span>
         </Link>
       </motion.div>
@@ -165,8 +172,10 @@ interface NavigationButtonProps {
 const NavigationButton = ({ direction, onClick, disabled = false }: NavigationButtonProps) => {
   return (
     <button 
-      className={`w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center transition-colors ${
-        disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'
+      className={`w-12 h-12 rounded-full border flex items-center justify-center transition-colors duration-300 ${
+        disabled 
+          ? 'opacity-50 cursor-not-allowed text-gray-400 border-gray-300' 
+          : 'text-gray-700 border-gray-400 hover:bg-black hover:text-white hover:border-black cursor-pointer'
       }`}
       onClick={onClick}
       disabled={disabled}
@@ -297,62 +306,104 @@ export function NewsSection() {
   // 添加一个状态来存储图片高度
   const [imageHeight, setImageHeight] = useState(0);
   
-  // 监听activeNews变化，更新内容区域的高度
+  // 监听activeNews变化，更新内容区域的高度和图片高度
   useEffect(() => {
     if (contentRef.current) {
       // 设置一个最小高度，确保即使内容很少也有足够的空间
-      const minHeight = 600;
+      const minHeight = 500;
       // 获取当前内容的高度
       const height = Math.max(contentRef.current.scrollHeight, minHeight);
       setContentHeight(height);
       
       // 获取图片高度
-      const imageElement = contentRef.current.querySelector('.aspect-\\[16\\/9\\]');
+      const imageElement = contentRef.current.querySelector('.aspect-\\[16\\/10\\], .aspect-\\[16\\/8\\], .aspect-\\[16\\/7\\]');
       if (imageElement) {
         setImageHeight(imageElement.clientHeight);
       }
     }
   }, [activeNews]);
 
+  // 计算每个日期项的动态样式
+  const getItemStyle = (index: number) => {
+    const distance = Math.abs(index - activeIndex);
+    
+    // 根据与当前选中项的距离计算不透明度和缩放比例
+    if (distance === 0) return {}; // 当前选中项使用默认样式
+    
+    const opacity = Math.max(0.4, 1 - distance * 0.2);
+    const scale = Math.max(0.8, 1 - distance * 0.1);
+    
+    return {
+      opacity,
+      scale,
+    };
+  };
+
   return (
-    <section className="w-full py-24 px-6 md:px-12 bg-white">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
+    <section className="w-full py-20 px-4 md:px-6 lg:px-8 bg-white">
+      <div className="container mx-auto max-w-[1400px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
           {/* 左侧标题和日期列表 */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 lg:col-span-2 md:flex md:flex-col">
             {/* News标题 */}
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 tracking-tight font-geist-sans relative inline-block">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 tracking-tight font-geist-sans relative inline-block">
               News
               <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-black"></span>
             </h2>
             
-            {/* 日期列表 - 在手机端隐藏滚动条 */}
-            <div 
-              ref={newsListRef} 
-              className="flex md:flex-col overflow-x-auto scrollbar-hide md:overflow-x-visible pb-4 md:pb-0 space-x-6 md:space-x-0 md:space-y-5 text-base md:text-lg relative"
-            >
-              {newsItems.map((item, index) => (
-                <NewsDateItem 
-                  key={item.id}
-                  date={item.date} 
-                  isActive={index === activeIndex}
-                  onClick={() => setActiveIndex(index)}
-                />
-              ))}
+            {/* 日期列表容器 */}
+            <div className="md:flex md:flex-col">
+              {/* 日期列表 - 在手机端水平滚动，在桌面端垂直排列 */}
+              <div 
+                ref={newsListRef} 
+                className="flex md:flex-col overflow-x-auto scrollbar-hide pb-4 md:pb-0 space-x-6 md:space-x-0 md:space-y-5"
+              >
+                {newsItems.map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    custom={index}
+                    animate={getItemStyle(index)}
+                    transition={{ duration: 0.3 }}
+                    className="w-full"
+                  >
+                    <NewsDateItem 
+                      date={item.date} 
+                      isActive={index === activeIndex}
+                      onClick={() => {
+                        setActiveIndex(index);
+                        // 滚动到视图中间
+                        if (newsListRef.current) {
+                          const container = newsListRef.current;
+                          const element = container.children[index] as HTMLElement;
+                          if (element) {
+                            // 在移动端，水平滚动到中间
+                            if (window.innerWidth < 768) {
+                              const containerWidth = container.offsetWidth;
+                              const elementLeft = element.offsetLeft;
+                              const elementWidth = element.offsetWidth;
+                              container.scrollLeft = elementLeft - containerWidth / 2 + elementWidth / 2;
+                            }
+                          }
+                        }
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
           
           {/* 中间新闻内容 */}
           <div 
             ref={newsContentRef} 
-            className="md:col-span-9 relative"
+            className="md:col-span-9 lg:col-span-10 relative"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div 
-                className="md:col-span-12 relative"
+                className="md:col-span-12 lg:col-span-11 relative"
                 ref={contentRef}
                 style={{ 
                   height: contentHeight > 0 ? `${contentHeight}px` : 'auto'
@@ -371,8 +422,8 @@ export function NewsSection() {
               </div>
             </div>
             
-            {/* 右侧导航按钮 - 仅在桌面端显示 */}
-            <div className="hidden md:absolute md:flex md:top-[10%] md:right-0 flex-col gap-4">
+            {/* 右侧导航按钮 - 保持当前位置不变 */}
+            <div className="hidden md:absolute md:flex md:flex-col md:gap-4 md:top-1/3 md:-translate-y-1/4 md:right-0">
               <NavigationButton 
                 direction="up" 
                 onClick={handlePrevious}

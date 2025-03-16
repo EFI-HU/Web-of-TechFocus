@@ -1,7 +1,7 @@
 'use client';
 
+import { newsData } from '@/data/news-data';
 import { NewsItem } from '@/types/news';
-import { format } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,101 +22,6 @@ const navItems: NavItem[] = [
   { name: 'Stories', href: '/stories' },
   { name: 'Company', href: '/company' },
   { name: 'News', href: '/news' },
-];
-
-// 模拟新闻数据 - 使用主页中的正确日期
-const newsData: NewsItem[] = [
-  {
-    id: '1',
-    date: '2025-03-21',
-    title: 'TechFocus Launches New Website to Enhance Customer Engagement',
-    summary: 'New corporate website offers modern interface, detailed service insights, and interactive features for clients and partners.',
-    content: [
-      'Boulder, CO – [2025.3.21] – TechFocus has officially launched its new and improved website, designed to provide clients, partners, and industry professionals with a streamlined and interactive user experience.',
-      'The updated website (www.techfocususa.com) offers:',
-      '✅ A modern, easy-to-navigate interface',
-      '✅ Detailed insights into TechFocus\'s IT solutions and services',
-      '✅ Case studies showcasing successful projects',
-      '✅ A dedicated resource hub for industry news and research',
-      '"As a technology-driven company, it was essential for us to have a digital presence that reflects our expertise and values," said Dr. Wang. "Our new website is designed to provide a seamless experience, enabling visitors to explore our services, learn about our projects, and connect with our experts."',
-      'In addition to the revamped design, the website includes an interactive contact section where businesses and agencies can easily inquire about TechFocus\'s services and potential collaborations.',
-      'The launch of the new website marks another step in TechFocus\'s journey to expand its digital footprint and enhance customer engagement. The company invites visitors to explore the site and discover the innovative solutions it offers.'
-    ],
-    author: 'TechFocus Media Team',
-    images: [
-      {
-        url: '/news/website-launch.jpg',
-        alt: 'TechFocus new website launch',
-        type: 'banner' // 长方形图片，放在内容开头
-      },
-      {
-        url: '/woman.png',
-        alt: 'Interactive user experience',
-        type: 'square',
-        position: 5 // 放在第5段落后面
-      }
-    ]
-  },
-  {
-    id: '2',
-    date: '2023-05-03',
-    title: 'TechFocus Improves Freight Transportation Efficiency in Smart Cities',
-    summary: 'New AI-driven platform optimizes urban freight movement, reducing energy consumption and operational costs.',
-    content: [
-      'Boulder, CO – [2023.5.3] – In its latest innovation, TechFocus has successfully enhanced the energy efficiency of freight movement in smart cities by developing an intelligent transportation platform. The platform provides real-time decision-making capabilities for transportation system operators, optimizing freight movement while reducing energy consumption.',
-      'The newly developed system leverages AI-driven analytics and multi-modal logistics integration to enhance transportation efficiency across various freight networks. The platform is designed to streamline routes, predict demand patterns, and minimize fuel consumption, ensuring a greener and more cost-effective urban freight ecosystem.',
-      '"As cities grow and logistics demands increase, there is a pressing need for smarter, more efficient freight movement strategies," said Dr. Wang. "Our platform not only reduces operational costs but also plays a crucial role in lowering environmental impact."',
-      'This milestone reflects TechFocus\'s commitment to sustainability and innovation in urban transportation, reinforcing its position as a leader in intelligent transportation solutions.'
-    ],
-    author: 'TechFocus Media Team',
-    images: [
-      {
-        url: '/news/smart-freight.jpg',
-        alt: 'Smart freight transportation system',
-        type: 'banner',
-        position: 1 // 放在第1段落后面
-      }
-    ]
-  },
-  {
-    id: '3',
-    date: '2021-12-04',
-    title: 'TechFocus Model Integrated into Google Maps for Energy-Efficient Routing',
-    summary: 'Google Maps adopts TechFocus\'s fuel economy model to help drivers find the most energy-efficient routes.',
-    content: [
-      'Boulder, CO – [2021.12.4] – In a significant achievement, TechFocus has received DOE authorization in 2019 for a closed-source copyright on an advanced fuel economy estimation model. The model, developed exclusively by Dr. Wang, has since been adopted by Google Maps to introduce its "most energy-efficient route" feature in 2021.',
-      'This data-driven tool, titled "A Tool to Estimate Fuel Economy/Consumption-Based on Real-World Driving Profile," is designed to analyze and predict fuel consumption patterns based on diverse driving behaviors and environmental conditions. The DOE\'s authorization allows TechFocus to maintain exclusive rights to the model, ensuring continued innovation and refinement.',
-      '"Having our model integrated into a globally used platform like Google Maps underscores the real-world impact of our work," said Dr. Wang. "Our goal is to empower drivers with smarter choices that promote fuel efficiency and environmental sustainability."',
-      'With Google Maps now offering users the ability to select routes that minimize fuel consumption, TechFocus has made a significant contribution to reducing global carbon emissions and promoting energy-efficient mobility.'
-    ],
-    author: 'TechFocus Media Team'
-  },
-  {
-    id: '4',
-    date: '2020-01-04',
-    title: 'TechFocus Secures $1.75M DOE Grant to Advance Electric Bus Deployment',
-    summary: 'DOE grant funds development of tools to help transit agencies optimize electric bus deployment and operations.',
-    content: [
-      'Boulder, CO – [2020.1.4] – TechFocus has been awarded a $1.75 million grant from the U.S. Department of Energy (DOE) in 2020 to develop innovative planning and operational tools for electric bus deployment. The funding, granted through the DOE\'s Funding Opportunity Announcement (FOA), marks a major milestone in TechFocus\'s mission to support sustainable transportation solutions.',
-      'The project aims to assist transit agencies in transitioning to electric buses by leveraging real-world implementation and validation strategies. The tools developed under this initiative will help agencies optimize deployment strategies, improve energy efficiency, and enhance the overall operation of electric transit fleets.',
-      '"Electrification of public transportation is a key component of reducing carbon emissions and fostering a greener future," said Dr. Wang. "Through this project, we are providing transit agencies with the necessary tools and data-driven strategies to make informed decisions."',
-      'The initiative aligns with TechFocus\'s broader mission to develop sustainable and high-impact technological solutions. With the funding secured, the company is poised to revolutionize the way transit agencies implement electric bus fleets, ensuring an efficient and cost-effective transition.'
-    ],
-    author: 'TechFocus Media Team'
-  },
-  {
-    id: '5',
-    date: '2017-03-01',
-    title: 'TechFocus Officially Established to Drive Innovation in IT Solutions',
-    summary: 'New company launches to deliver cutting-edge technology solutions for federal agencies and commercial clients.',
-    content: [
-      'Boulder, CO – [2017.3.1] – A new era of IT solutions has begun with the launch of TechFocus, a company committed to delivering cutting-edge technology solutions to federal agencies and commercial clients. Established on [exact founding date in 2017], TechFocus has rapidly emerged as a leader in IT modernization, artificial intelligence, machine learning, cloud computing, and data science.',
-      'Founded by a team of highly skilled professionals, 75% of whom hold advanced degrees, TechFocus was created to bridge the gap between emerging technologies and mission-critical applications. With a strong emphasis on cybersecurity, cloud computing, and AI-driven solutions, the company is uniquely positioned to help organizations navigate the complexities of digital transformation.',
-      '"We recognized a growing need for highly specialized technology solutions that could seamlessly integrate into existing infrastructures while improving operational efficiency," said Dr. Lijuan Wang, a key figure behind the company\'s inception. "TechFocus is built on a foundation of expertise, research, and real-world implementation, making us a reliable partner for businesses and government agencies alike."',
-      'Since its launch, TechFocus has worked extensively with federal institutions, contributing to AI-driven projects, cloud migration initiatives, and cutting-edge machine learning applications. As the company moves forward, it remains dedicated to innovation, efficiency, and sustainability in IT solutions.'
-    ],
-    author: 'TechFocus Media Team'
-  }
 ];
 
 export function NewsPage() {
@@ -145,21 +50,193 @@ export function NewsPage() {
   
   // 渲染内容，支持在指定位置插入图片
   const renderContent = () => {
-    if (!selectedNews.images || selectedNews.images.length === 0) {
+    // 获取当前选中的新闻
+    const news = selectedNews;
+    
+    // 如果有视频布局配置，使用视频布局
+    if (news.videoLayout) {
+      const videoLayout = news.videoLayout; // 使用临时变量避免类型检查错误
+      return (
+        <>
+          {/* 日期和标题部分 */}
+          <div className="mb-16 text-center">
+            <div className="text-gray-600 mb-6">
+              {videoLayout.location}-{videoLayout.date}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-16 tracking-tight">
+              {videoLayout.fullTitle}
+            </h1>
+          </div>
+          
+          {/* 顶部视频 */}
+          {news.videos && news.videos.length > 0 && (
+            <div className="w-full mb-20 max-w-6xl mx-auto">
+              <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl video-container">
+                <video 
+                  src={news.videos[0].url} 
+                  poster={news.videos[0].posterUrl}
+                  autoPlay
+                  muted
+                  playsInline
+                  loop={false}
+                  controls={false}
+                  className="w-full h-auto object-cover"
+                  onEnded={(e) => {
+                    // 不做任何操作，让视频停留在最后一帧
+                  }}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          )}
+          
+          {/* 文章内容 */}
+          <div className="max-w-4xl mx-auto">
+            {news.content.map((paragraph, index) => {
+              // 所有段落正常处理，不再对第三段特殊处理
+              return (
+                <p key={index} className="text-lg mb-6 leading-relaxed">
+                  {paragraph}
+                </p>
+              );
+            })}
+            
+            {/* 只在有作者信息时显示作者部分 */}
+            {news.author && (
+              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
+            )}
+          </div>
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
+    }
+    
+    // 如果有特殊布局配置，使用特殊布局
+    if (news.specialLayout) {
+      const specialLayout = news.specialLayout; // 使用临时变量避免类型检查错误
+      return (
+        <>
+          {/* 日期和标题部分 */}
+          <div className="mb-16 text-center">
+            <div className="text-gray-600 mb-6">
+              {specialLayout.location}-{specialLayout.date}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-12 tracking-tight">
+              {specialLayout.fullTitle.split('<br />').map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i < specialLayout.fullTitle.split('<br />').length - 1 && <br />}
+                </span>
+              ))}
+            </h1>
+            <div className="max-w-2xl mx-auto text-center space-y-4">
+              {specialLayout.highlights.map((highlight, index) => (
+                <p key={index} className="text-lg">{highlight}</p>
+              ))}
+            </div>
+          </div>
+          
+          {/* 顶部大图 - 更大的尺寸 */}
+          {news.images && news.images.length > 0 && (
+            <div className="w-full mb-20 max-w-6xl mx-auto">
+              <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
+                <img 
+                  src={news.images[0].url} 
+                  alt={news.images[0].alt} 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          )}
+          
+          {/* 文章内容 */}
+          <div className="max-w-4xl mx-auto">
+            {news.content.map((paragraph, index) => {
+              // 第一段落特殊处理，与原型图一致
+              if (index === 0) {
+                return (
+                  <p key={index} className="text-lg mb-10 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+              // 第二段落特殊处理，与原型图一致
+              else if (index === 1) {
+                return (
+                  <p key={index} className="text-lg mb-10 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+              // 第三段落特殊处理，引用样式，与原型图一致
+              else if (index === 2) {
+                return (
+                  <div key={index} className="mb-16">
+                    <blockquote className="text-2xl font-semibold text-center mb-4 max-w-3xl mx-auto leading-relaxed">
+                      {paragraph}
+                    </blockquote>
+                    {news.author && (
+                      <p className="text-center text-gray-600">{news.author}</p>
+                    )}
+                  </div>
+                );
+              }
+              // 其他段落正常处理
+              else {
+                return (
+                  <p key={index} className="text-lg mb-6 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+            })}
+          </div>
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
+    }
+    
+    // 对于其他文章，使用标准布局
+    if (!news.images || news.images.length === 0) {
       // 如果没有图片，直接渲染所有段落
-      return selectedNews.content.map((paragraph, index) => (
-        <p key={index} className="mb-6 text-black leading-loose text-left text-xl mx-auto max-w-3xl">
-          {paragraph}
-        </p>
-      ));
+      return (
+        <>
+          {/* 标题和摘要 */}
+          <div className="mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">{news.title}</h1>
+            <p className="text-lg text-gray-600">{news.summary}</p>
+          </div>
+          
+          {news.content.map((paragraph, index) => (
+            <p key={index} className="text-lg mb-6 leading-relaxed max-w-4xl mx-auto">
+              {paragraph}
+            </p>
+          ))}
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
     }
 
     // 如果有图片，在指定位置插入图片
     const result: React.ReactNode[] = [];
-    let contentIndex = 0;
-
+    
+    // 添加标题和摘要
+    result.push(
+      <div key="title-summary" className="mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">{news.title}</h1>
+        <p className="text-lg text-gray-600">{news.summary}</p>
+      </div>
+    );
+    
     // 先添加没有指定位置的图片（默认放在内容开头）
-    const unpositionedImages = selectedNews.images?.filter(img => img.position === undefined) || [];
+    const unpositionedImages = news.images?.filter(img => img.position === undefined) || [];
     
     // 只保留banner类型的图片
     const bannerImages = unpositionedImages.filter(img => img.type === 'banner');
@@ -168,92 +245,51 @@ export function NewsPage() {
     if (bannerImages.length > 0) {
       const firstBannerImage = bannerImages[0];
       result.push(
-        <div key={`img-default-${firstBannerImage.url}`} className="my-12 w-full image-container banner-image">
-          <img 
-            src="/whitehouse.png" 
-            alt={firstBannerImage.alt} 
-            className="w-full h-auto object-cover rounded-lg shadow-md"
-          />
-          <div className="mt-12 mx-auto max-w-3xl">
-            <hr className="border-gray-100" />
+        <div key={`img-default-${firstBannerImage.url}`} className="w-full mb-10 max-w-5xl mx-auto">
+          <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
+            <img 
+              src={firstBannerImage.url} 
+              alt={firstBannerImage.alt} 
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
       );
-      
-      // 添加其他banner图片
-      bannerImages.slice(1).forEach(image => {
-        result.push(
-          <div key={`img-default-${image.url}`} className="my-8 w-full image-container banner-image">
-            <img 
-              src="/whitehouse.png" 
-              alt={image.alt} 
-              className="w-full h-auto object-cover rounded-lg shadow-md"
-            />
-          </div>
-        );
-      });
     }
     
     // 然后按顺序添加内容和指定位置的图片
-    selectedNews.content.forEach((paragraph, index) => {
+    news.content.forEach((paragraph, index) => {
       result.push(
-        <p key={`p-${index}`} className="mb-6 text-black leading-loose text-left text-xl mx-auto max-w-3xl">
+        <p key={`p-${index}`} className="text-lg mb-6 leading-relaxed max-w-4xl mx-auto">
           {paragraph}
         </p>
       );
-      contentIndex = index;
 
       // 检查是否有图片应该放在这个段落后面，只保留banner类型
-      const positionedBannerImages = selectedNews.images?.filter(img => 
+      const positionedBannerImages = news.images?.filter(img => 
         img.position === index + 1 && img.type === 'banner'
       ) || [];
       
-      // 检查这是否是文章中的第一张图片位置（如果没有无位置的banner图片）
-      const isFirstImagePosition = bannerImages.length === 0 && index === 0 && positionedBannerImages.length > 0;
-      
-      // 如果是第一张图片位置，添加特殊样式
-      if (isFirstImagePosition && positionedBannerImages.length > 0) {
-        const firstPositionedBanner = positionedBannerImages[0];
+      // 添加指定位置的图片
+      positionedBannerImages.forEach(image => {
         result.push(
-          <div key={`img-${index}-${firstPositionedBanner.url}`} className="my-12 w-full image-container banner-image">
-            <img 
-              src="/whitehouse.png" 
-              alt={firstPositionedBanner.alt} 
-              className="w-full h-auto object-cover rounded-lg shadow-md"
-            />
-            <div className="mt-12 mx-auto max-w-3xl">
-              <hr className="border-gray-100" />
+          <div key={`img-${index}-${image.url}`} className="w-full my-10 max-w-5xl mx-auto">
+            <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
+              <img 
+                src={image.url} 
+                alt={image.alt} 
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
         );
-        
-        // 添加其他指定位置banner图片
-        positionedBannerImages.slice(1).forEach(image => {
-          result.push(
-            <div key={`img-${index}-${image.url}`} className="my-8 w-full image-container banner-image">
-              <img 
-                src="/whitehouse.png" 
-                alt={image.alt} 
-                className="w-full h-auto object-cover rounded-lg shadow-md"
-              />
-            </div>
-          );
-        });
-      } else {
-        // 非第一张图片位置，正常处理
-        positionedBannerImages.forEach(image => {
-          result.push(
-            <div key={`img-${index}-${image.url}`} className="my-8 w-full image-container banner-image">
-              <img 
-                src="/whitehouse.png" 
-                alt={image.alt} 
-                className="w-full h-auto object-cover rounded-lg shadow-md"
-              />
-            </div>
-          );
-        });
-      }
+      });
     });
+    
+    // 添加文章底部空白区域
+    result.push(
+      <div key="bottom-space" className="h-32 md:h-40"></div>
+    );
 
     return result;
   };
@@ -261,7 +297,6 @@ export function NewsPage() {
   // 移动端导航栏日期项
   const MobileDateItem = ({ news }: { news: NewsItem }) => {
     const isActive = news.id === selectedNewsId;
-    const formattedDate = format(new Date(news.date), 'MMM d, yyyy');
     
     return (
       <button
@@ -276,7 +311,7 @@ export function NewsPage() {
             : 'text-gray-600 hover:bg-gray-50'
         } text-center whitespace-nowrap`}
       >
-        {formattedDate}
+        {news.title}
       </button>
     );
   };
@@ -290,23 +325,23 @@ export function NewsPage() {
             <nav className="flex flex-col space-y-6">
               {newsData.map((news) => {
                 const isActive = news.id === selectedNewsId;
-                const formattedDate = format(new Date(news.date), 'MMMM d, yyyy');
                 
                 return (
                   <button
                     key={news.id}
                     onClick={() => setSelectedNewsId(news.id)}
-                    className="text-base text-black py-2 px-3 rounded transition-all duration-300 ease-in-out hover:bg-gray-100 text-left relative group flex items-center w-full"
+                    className="text-base py-2 px-3 rounded transition-all duration-300 ease-in-out hover:bg-gray-100 text-left relative group flex items-center w-full"
                   >
                     <span 
                       className="transition-all duration-300 ease-in-out"
                       style={{ 
                         fontWeight: isActive ? 600 : 400,
+                        color: isActive ? '#000000' : '#AAAAAA',
                         opacity: isActive ? 1 : 0.85,
                         transform: isActive ? 'scale(1.02)' : 'scale(1)'
                       }}
                     >
-                      {formattedDate}
+                      {news.title}
                     </span>
                     <span className="absolute right-2 opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
                       &gt;
@@ -321,25 +356,25 @@ export function NewsPage() {
       
       {/* 移动端顶部导航栏 - 在桌面端隐藏 */}
       <div className="md:hidden bg-white shadow-sm w-full">
-        <div className="flex justify-between items-center px-4 py-3">
-          <div className="text-lg font-medium">News</div>
-          <button 
+        <div className="flex justify-between items-center px-0 py-3">
+          <div className="text-lg font-medium pl-4">News</div>
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="flex items-center space-x-1 text-gray-700"
+            className="flex items-center space-x-1 text-gray-700 pr-4"
           >
-            <span className="text-sm">{format(new Date(selectedNews.date), 'MMM d, yyyy')}</span>
+            <span className="text-sm">{selectedNews.title}</span>
             <svg 
-              xmlns="http://www.w3.org/2000/svg" 
+              xmlns="http://www.w3.org/2000/svg"
               className={`h-5 w-5 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
         </div>
-        
+
         {/* 移动端下拉菜单 */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -362,14 +397,14 @@ export function NewsPage() {
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* 内容区域 - 桌面端有左侧边距，移动端没有 */}
       <div className="flex-1 overflow-x-hidden">
         <div className="w-full md:ml-0">
           <div className="container mx-auto py-6 md:py-12 px-4 md:px-6 overflow-x-hidden">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col">
               {/* 文章内容 */}
-              <div className="w-full max-w-3xl">
+              <div className="w-full">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedNewsId}
@@ -378,31 +413,9 @@ export function NewsPage() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {/* 新的文章标题设计 */}
-                    <div className="mb-8 md:mb-12 text-center">
-                      {/* 发布时间 - 仅在桌面端显示，移动端已在顶部显示 */}
-                      <div className="hidden md:block text-gray-500 mb-4">
-                        {format(new Date(selectedNews.date), 'MMMM d, yyyy')}
-                      </div>
-                      
-                      {/* 大标题 - 响应式字体大小 */}
-                      <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-8 tracking-tight max-w-5xl mx-auto leading-tight">
-                        {selectedNews.title}
-                      </h1>
-                      
-                      {/* 文章概述 - 响应式字体大小 */}
-                      <div className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
-                        {selectedNews.summary}
-                      </div>
-                    </div>
-                    
                     {/* 文章正文内容 */}
                     <div className="prose max-w-none overflow-x-hidden">
                       {renderContent()}
-                      
-                      <div className="max-w-3xl mx-auto mt-8 text-sm text-gray-500 text-center">
-                        Author: {selectedNews.author}
-                      </div>
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -427,10 +440,57 @@ const styles = `
 
 .image-container img {
   transition: transform 0.3s ease;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .image-container:hover img {
   transform: scale(1.02);
+}
+
+/* 视频容器样式 */
+video {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  display: block;
+}
+
+/* 确保视频和图片容器样式一致 */
+.video-container, .image-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 引用样式 */
+blockquote {
+  font-style: italic;
+  color: #333;
+  position: relative;
+  padding: 0 2rem;
+  line-height: 1.6;
+}
+
+blockquote::before,
+blockquote::after {
+  content: '"';
+  font-size: 2.5rem;
+  position: absolute;
+  opacity: 0.3;
+}
+
+blockquote::before {
+  left: 0;
+  top: -1rem;
+}
+
+blockquote::after {
+  right: 0;
+  bottom: -2rem;
 }
 
 /* 隐藏滚动条但保持可滚动功能 - 适用于所有设备 */
@@ -446,15 +506,18 @@ const styles = `
 /* 响应式布局 - 大屏幕 (1200px以上) */
 @media (min-width: 1200px) {
   .banner-image {
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
   
   .banner-image img {
     aspect-ratio: 16/9;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
+    width: 100%;
   }
   
   .max-w-3xl {
@@ -466,21 +529,29 @@ const styles = `
   }
   
   .max-w-5xl {
-    max-width: 64rem !important; /* 1024px */
+    max-width: 70rem !important; /* 1120px */
+  }
+  
+  .max-w-6xl {
+    max-width: 76rem !important; /* 1216px */
   }
 }
 
 /* 响应式布局 - 中等屏幕 (768px - 1199px) */
 @media (min-width: 768px) and (max-width: 1199px) {
   .banner-image {
-    width: 95%;
-    max-width: 1000px;
+    width: 100%;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
   }
   
   .banner-image img {
     aspect-ratio: 16/9;
+    border-radius: 1rem;
+    width: 100%;
   }
   
   .max-w-3xl {
@@ -496,7 +567,13 @@ const styles = `
   }
   
   .max-w-5xl {
-    max-width: 52rem !important; /* 832px */
+    max-width: 60rem !important; /* 960px */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  .max-w-6xl {
+    max-width: 64rem !important; /* 1024px */
     margin-left: auto !important;
     margin-right: auto !important;
   }
@@ -508,17 +585,25 @@ const styles = `
     width: 100%;
     margin-left: 0;
     margin-right: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
   
   .banner-image img {
     aspect-ratio: 4/3;
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
+    width: 100%;
   }
   
-  .max-w-2xl, .max-w-3xl, .max-w-4xl, .max-w-5xl {
+  .max-w-2xl, .max-w-3xl, .max-w-4xl, .max-w-5xl, .max-w-6xl {
     max-width: 100% !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+  }
+  
+  blockquote {
+    padding: 0 1rem;
+    font-size: 1.25rem;
   }
 }
 `;

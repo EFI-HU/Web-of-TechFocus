@@ -58,6 +58,7 @@ export function Header() {
     { href: '/business', label: '业务范围' },
     { href: '/contact', label: '联系我们' },
     { href: '/career', label: '加入我们' },
+    { href: '/federal', label: 'Government', isSpecial: true },
   ];
 
   return (
@@ -114,12 +115,15 @@ export function Header() {
                   >
                     <Link 
                       href={item.href} 
-                      className={`block py-4 pr-8 text-right text-lg font-medium text-white hover:text-[#9333EA] transition-colors duration-200`}
+                      className={item.isSpecial 
+                        ? 'inline-block mt-6 mb-2 mr-8 px-6 py-2 bg-black text-white rounded-full text-base font-medium transition-colors duration-300 hover:bg-white hover:text-black border border-black text-center' 
+                        : 'block py-4 pr-8 text-right text-lg font-medium text-white hover:text-black transition-colors duration-200'
+                      }
                       onClick={toggleMenu}
                     >
                       {item.label}
                     </Link>
-                    {index !== menuItems.length - 1 && (
+                    {index !== menuItems.length - 1 && !item.isSpecial && (
                       <div className="absolute bottom-0 right-0 w-full h-[1px] bg-white/10" />
                     )}
                   </motion.div>
@@ -149,9 +153,9 @@ export function Header() {
         calcHeightOnResize={true}
       >
         <header className="w-full py-4 bg-white transition-all duration-500">
-          <div className="flex justify-between items-center px-6 md:px-12 lg:px-16 mx-auto">
+          <div className="flex justify-between items-center px-0 mx-auto">
             {/* 左侧LOGO和文字 */}
-            <div className="flex-shrink-0 relative z-[999]">
+            <div className="flex-shrink-0 relative z-[999] pl-4 md:pl-8">
               <Link href="/" className="flex items-center gap-2">
                 {/* 公司Logo */}
                 <div className="relative w-10 h-10">
@@ -170,7 +174,7 @@ export function Header() {
             </div>
             
             {/* 移动端菜单按钮 */}
-            <div className="md:hidden relative z-[999]">
+            <div className="md:hidden relative z-[999] pr-6">
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -210,7 +214,7 @@ export function Header() {
             </div>
             
             {/* 桌面端导航 */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-8 pr-16">
               <Link href="/news" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
                 News
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
@@ -229,10 +233,9 @@ export function Header() {
               </Link>
               <Link 
                 href="/federal" 
-                className="ml-2 px-4 py-2 bg-[#111] text-white rounded-full text-[14px] font-medium relative overflow-hidden group"
+                className="ml-2 px-4 py-2 bg-black text-white rounded-full text-[14px] font-medium transition-colors duration-300 hover:bg-white hover:text-black hover:border-black border border-black"
               >
-                <span className="relative z-10">Federal</span>
-                <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
+                Government
               </Link>
             </nav>
           </div>
