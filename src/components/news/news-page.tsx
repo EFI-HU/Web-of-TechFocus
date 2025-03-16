@@ -53,6 +53,96 @@ export function NewsPage() {
     // 获取当前选中的新闻
     const news = selectedNews;
     
+    // 如果有地图比较布局配置，渲染地图比较布局
+    if (news.mapComparisonLayout && news.id === '3') {
+      const mapLayout = news.mapComparisonLayout; // 使用临时变量避免类型检查错误
+      const imageLayout = news.imageLayout; // 获取图片布局配置
+      
+      return (
+        <>
+          {/* 第一屏：顶部日期 */}
+          <div className="mb-8 text-center">
+            <div className="text-gray-600">
+              {imageLayout?.location}-{imageLayout?.date}
+            </div>
+          </div>
+          
+          {/* 第一屏：左侧GIF和右侧标题的两栏布局 */}
+          <div className="w-full mb-16 max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16">
+              {/* 左侧GIF */}
+              {news.images && news.images.length > 0 && (
+                <div className="w-full md:w-1/2">
+                  <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
+                    <img 
+                      src={news.images[0].url} 
+                      alt={news.images[0].alt} 
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {/* 右侧标题 */}
+              <div className="w-full md:w-1/2 flex items-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-tight">
+                  {imageLayout?.fullTitle}
+                </h1>
+              </div>
+            </div>
+          </div>
+          
+          {/* 第一屏和第二屏之间的分隔线 */}
+          <div className="w-full max-w-4xl mx-auto my-16 border-t border-gray-200"></div>
+          
+          {/* 第二屏：文章内容前两段 */}
+          <div className="max-w-4xl mx-auto mb-16">
+            {news.content.slice(0, 2).map((paragraph, index) => (
+              <p key={index} className="text-lg mb-6 leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          
+          {/* 第二屏：地图比较部分 - 单一图片 */}
+          <div className="w-full max-w-6xl mx-auto mb-16">
+            <div className="flex justify-center">
+              <div className="w-full max-w-2xl">
+                <div className="flex justify-between mb-4 text-gray-600">
+                  <span className="font-normal">{mapLayout.firstImageTitle}</span>
+                  <span className="font-normal">{mapLayout.secondImageTitle}</span>
+                </div>
+                <div className="w-full relative overflow-hidden rounded-md">
+                  <img 
+                    src={mapLayout.imageUrl} 
+                    alt={mapLayout.imageAlt} 
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* 第二屏：最后一段文章内容 */}
+          <div className="max-w-4xl mx-auto mt-8">
+            {news.content.slice(2).map((paragraph, index) => (
+              <p key={index + 2} className="text-lg mb-6 leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          
+          {/* 只在有作者信息时显示作者部分 */}
+          {news.author && (
+            <p className="text-right text-gray-600 mt-8 mb-16 max-w-4xl mx-auto">{news.author}</p>
+          )}
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
+    }
+    
     // 如果有视频布局配置，使用视频布局
     if (news.videoLayout) {
       const videoLayout = news.videoLayout; // 使用临时变量避免类型检查错误
@@ -63,14 +153,14 @@ export function NewsPage() {
             <div className="text-gray-600 mb-6">
               {videoLayout.location}-{videoLayout.date}
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-16 tracking-tight">
+            <h1 className="text-5xl md:text-6xl font-medium mb-16 tracking-tight">
               {videoLayout.fullTitle}
             </h1>
           </div>
           
           {/* 顶部视频 */}
           {news.videos && news.videos.length > 0 && (
-            <div className="w-full mb-20 max-w-6xl mx-auto">
+            <div className="w-full mb-14 max-w-6xl mx-auto">
               <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl video-container">
                 <video 
                   src={news.videos[0].url} 
@@ -94,9 +184,8 @@ export function NewsPage() {
           {/* 文章内容 */}
           <div className="max-w-4xl mx-auto">
             {news.content.map((paragraph, index) => {
-              // 所有段落正常处理，不再对第三段特殊处理
               return (
-                <p key={index} className="text-lg mb-6 leading-relaxed">
+                <p key={index} className="text-lg mb-8 leading-relaxed">
                   {paragraph}
                 </p>
               );
@@ -104,7 +193,66 @@ export function NewsPage() {
             
             {/* 只在有作者信息时显示作者部分 */}
             {news.author && (
-              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
+              <p className="text-right text-gray-600 mt-10 mb-16">{news.author}</p>
+            )}
+          </div>
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
+    }
+    
+    // 如果有图片布局配置，使用图片布局
+    if (news.imageLayout) {
+      const imageLayout = news.imageLayout; // 使用临时变量避免类型检查错误
+      return (
+        <>
+          {/* 顶部日期 */}
+          <div className="mb-8 text-center">
+            <div className="text-gray-600">
+              {imageLayout.location}-{imageLayout.date}
+            </div>
+          </div>
+          
+          {/* 左侧GIF和右侧标题的两栏布局 */}
+          <div className="w-full mb-16 max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16">
+              {/* 左侧GIF */}
+              {news.images && news.images.length > 0 && (
+                <div className="w-full md:w-1/2">
+                  <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
+                    <img 
+                      src={news.images[0].url} 
+                      alt={news.images[0].alt} 
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {/* 右侧标题 */}
+              <div className="w-full md:w-1/2 flex items-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-tight">
+                  {imageLayout.fullTitle}
+                </h1>
+              </div>
+            </div>
+          </div>
+          
+          {/* 文章内容 */}
+          <div className="max-w-4xl mx-auto">
+            {news.content.map((paragraph, index) => {
+              return (
+                <p key={index} className="text-lg mb-8 leading-relaxed">
+                  {paragraph}
+                </p>
+              );
+            })}
+            
+            {/* 只在有作者信息时显示作者部分 */}
+            {news.author && (
+              <p className="text-right text-gray-600 mt-10 mb-16">{news.author}</p>
             )}
           </div>
           
@@ -124,7 +272,7 @@ export function NewsPage() {
             <div className="text-gray-600 mb-6">
               {specialLayout.location}-{specialLayout.date}
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-12 tracking-tight">
+            <h1 className="text-5xl md:text-6xl font-medium mb-12 tracking-tight">
               {specialLayout.fullTitle.split('<br />').map((line, i) => (
                 <span key={i}>
                   {line}
@@ -175,7 +323,7 @@ export function NewsPage() {
               else if (index === 2) {
                 return (
                   <div key={index} className="mb-16">
-                    <blockquote className="text-2xl font-semibold text-center mb-4 max-w-3xl mx-auto leading-relaxed">
+                    <blockquote className="text-2xl font-medium text-center mb-4 max-w-3xl mx-auto leading-relaxed">
                       {paragraph}
                     </blockquote>
                     {news.author && (
@@ -208,7 +356,7 @@ export function NewsPage() {
         <>
           {/* 标题和摘要 */}
           <div className="mb-10">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{news.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-medium mb-4">{news.title}</h1>
             <p className="text-lg text-gray-600">{news.summary}</p>
           </div>
           
@@ -230,11 +378,11 @@ export function NewsPage() {
     // 添加标题和摘要
     result.push(
       <div key="title-summary" className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">{news.title}</h1>
+        <h1 className="text-3xl md:text-4xl font-medium mb-4">{news.title}</h1>
         <p className="text-lg text-gray-600">{news.summary}</p>
       </div>
     );
-    
+
     // 先添加没有指定位置的图片（默认放在内容开头）
     const unpositionedImages = news.images?.filter(img => img.position === undefined) || [];
     
@@ -358,23 +506,23 @@ export function NewsPage() {
       <div className="md:hidden bg-white shadow-sm w-full">
         <div className="flex justify-between items-center px-0 py-3">
           <div className="text-lg font-medium pl-4">News</div>
-          <button
+          <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="flex items-center space-x-1 text-gray-700 pr-4"
           >
             <span className="text-sm">{selectedNews.title}</span>
             <svg 
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg" 
               className={`h-5 w-5 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} 
-              fill="none"
-              viewBox="0 0 24 24"
+              fill="none" 
+              viewBox="0 0 24 24" 
               stroke="currentColor"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
         </div>
-
+        
         {/* 移动端下拉菜单 */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -397,7 +545,7 @@ export function NewsPage() {
           )}
         </AnimatePresence>
       </div>
-
+      
       {/* 内容区域 - 桌面端有左侧边距，移动端没有 */}
       <div className="flex-1 overflow-x-hidden">
         <div className="w-full md:ml-0">
@@ -604,6 +752,53 @@ blockquote::after {
   blockquote {
     padding: 0 1rem;
     font-size: 1.25rem;
+  }
+  
+  /* 移动设备上GIF和标题的布局 */
+  .flex-col.md\:flex-row {
+    gap: 1.5rem !important;
+  }
+  
+  .flex-col.md\:flex-row h1 {
+    font-size: 2.5rem !important;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 0.5rem;
+    font-weight: 500 !important; /* 确保移动设备上的字体粗细一致 */
+  }
+  
+  /* 确保所有标题在移动设备上字体粗细一致 */
+  h1 {
+    font-weight: 500 !important;
+    font-size: 2.75rem !important;
+    line-height: 1.2;
+  }
+  
+  /* 确保GIF在移动设备上有正确的宽高比 */
+  .image-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* 确保视频在移动设备上有正确的宽高比 */
+  .video-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* 调整移动设备上的文章内容间距 */
+  .text-lg {
+    font-size: 1.125rem !important;
+    line-height: 1.75;
+  }
+  
+  /* 调整移动设备上的日期和标题间距 */
+  .mb-10 {
+    margin-bottom: 2rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem !important;
   }
 }
 `;

@@ -118,6 +118,60 @@ export interface VideoLayout {
 }
 
 /**
+ * Image layout configuration for news items with featured image
+ * 图片布局配置，用于带特色图片的新闻项目
+ */
+export interface ImageLayout {
+  /**
+   * Location where the news was published
+   * 新闻发布的地点
+   */
+  location: string;
+  
+  /**
+   * Formatted date for display
+   * 用于显示的格式化日期
+   */
+  date: string;
+  
+  /**
+   * Full title for the news item (used in image layouts)
+   * 新闻项目的完整标题（用于图片布局）
+   */
+  fullTitle: string;
+}
+
+/**
+ * Map comparison layout configuration for news items with map comparison images
+ * 地图比较布局配置，用于带地图比较图片的新闻项目
+ */
+export interface MapComparisonLayout {
+  /**
+   * First comparison image title (usually time)
+   * 第一张比较图片的标题（通常是时间）
+   */
+  firstImageTitle: string;
+  
+  /**
+   * Second comparison image title (usually time)
+   * 第二张比较图片的标题（通常是时间）
+   */
+  secondImageTitle: string;
+  
+  /**
+   * Map comparison image URL
+   * 地图比较图片的URL
+   */
+  imageUrl: string;
+  
+  /**
+   * Alternative text for comparison image
+   * 比较图片的替代文本
+   */
+  imageAlt: string;
+}
+
+/**
  * News item interface
  * 新闻项目接口
  */
@@ -181,4 +235,16 @@ export interface NewsItem {
    * 可选的视频布局配置
    */
   videoLayout?: VideoLayout;
+  
+  /**
+   * Optional image layout configuration
+   * 可选的图片布局配置
+   */
+  imageLayout?: ImageLayout;
+  
+  /**
+   * Optional map comparison layout configuration
+   * 可选的地图比较布局配置
+   */
+  mapComparisonLayout?: MapComparisonLayout;
 } 

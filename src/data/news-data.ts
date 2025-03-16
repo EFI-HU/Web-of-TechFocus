@@ -69,12 +69,31 @@ export const newsData: NewsItem[] = [
     title: 'Routing',
     summary: 'Google Maps adopts TechFocus\'s fuel economy model to help drivers find the most energy-efficient routes.',
     content: [
-      'Boulder, CO – [2021.12.4] – In a significant achievement, TechFocus has received DOE authorization in 2019 for a closed-source copyright on an advanced fuel economy estimation model. The model, developed exclusively by Dr. Wang, has since been adopted by Google Maps to introduce its "most energy-efficient route" feature in 2021.',
+      'In a significant achievement, TechFocus has received DOE authorization in 2019 for a closed-source copyright on an advanced fuel economy estimation model. The model, developed exclusively by Dr. Wang, has since been adopted by Google Maps to introduce its "most energy-efficient route" feature in 2021.',
       'This data-driven tool, titled "A Tool to Estimate Fuel Economy/Consumption-Based on Real-World Driving Profile," is designed to analyze and predict fuel consumption patterns based on diverse driving behaviors and environmental conditions. The DOE\'s authorization allows TechFocus to maintain exclusive rights to the model, ensuring continued innovation and refinement.',
-      '"Having our model integrated into a globally used platform like Google Maps underscores the real-world impact of our work," said Dr. Wang. "Our goal is to empower drivers with smarter choices that promote fuel efficiency and environmental sustainability."',
       'With Google Maps now offering users the ability to select routes that minimize fuel consumption, TechFocus has made a significant contribution to reducing global carbon emissions and promoting energy-efficient mobility.'
     ],
-    author: 'TechFocus Media Team'
+    author: 'TechFocus Media Team',
+    images: [
+      {
+        url: '/news/routing.gif',
+        alt: 'Google Maps energy-efficient routing feature',
+        type: 'banner'
+      }
+    ],
+    // 添加图片布局配置，与原型图一致
+    imageLayout: {
+      location: 'Boulder, CO',
+      date: 'December 4, 2021',
+      fullTitle: 'Our Model Integrated into Google Maps for Energy-Efficient Routing'
+    },
+    // 添加地图比较布局配置，用于第二屏
+    mapComparisonLayout: {
+      firstImageTitle: 'Aug. 13. 11am',
+      secondImageTitle: 'Aug. 13. 4pm',
+      imageUrl: '/news/GoogleMaps.png',
+      imageAlt: 'Google Maps fuel consumption comparison at different times'
+    }
   },
   {
     id: '4',
@@ -87,7 +106,20 @@ export const newsData: NewsItem[] = [
       '"Electrification of public transportation is a key component of reducing carbon emissions and fostering a greener future," said Dr. Wang. "Through this project, we are providing transit agencies with the necessary tools and data-driven strategies to make informed decisions."',
       'The initiative aligns with TechFocus\'s broader mission to develop sustainable and high-impact technological solutions. With the funding secured, the company is poised to revolutionize the way transit agencies implement electric bus fleets, ensuring an efficient and cost-effective transition.'
     ],
-    author: 'TechFocus Media Team'
+    author: 'TechFocus Media Team',
+    videos: [
+      {
+        url: '/news/electric_bus.mp4',
+        alt: 'Electric bus deployment and operations video',
+        posterUrl: '/news/electric_bus_poster.jpg'
+      }
+    ],
+    // 视频布局配置，根据原型图设置
+    videoLayout: {
+      location: 'Boulder, CO',
+      date: 'January 4, 2020',
+      fullTitle: 'We Receives $1.75M DOE Grant for Electric Bus Planning Tools'
+    }
   },
   {
     id: '5',
