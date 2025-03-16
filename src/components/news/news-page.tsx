@@ -143,6 +143,105 @@ export function NewsPage() {
       );
     }
     
+    // 如果有视频+特殊布局配置，使用视频+特殊布局
+    if (news.videoWithSpecialLayout) {
+      const videoSpecialLayout = news.videoWithSpecialLayout; // 使用临时变量避免类型检查错误
+      return (
+        <>
+          {/* 日期和标题部分 */}
+          <div className="mb-16 text-center">
+            <div className="text-gray-600 mb-6">
+              {videoSpecialLayout.location}-{videoSpecialLayout.date}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-medium mb-12 tracking-tight">
+              {videoSpecialLayout.fullTitle.split('<br />').map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i < videoSpecialLayout.fullTitle.split('<br />').length - 1 && <br />}
+                </span>
+              ))}
+            </h1>
+            <div className="max-w-2xl mx-auto text-center space-y-4">
+              {videoSpecialLayout.highlights.map((highlight, index) => (
+                <p key={index} className="text-lg">{highlight}</p>
+              ))}
+            </div>
+          </div>
+          
+          {/* 顶部视频 */}
+          {news.videos && news.videos.length > 0 && (
+            <div className="w-full mb-20 max-w-6xl mx-auto">
+              <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl video-container">
+                <video 
+                  src={news.videos[0].url} 
+                  poster={news.videos[0].posterUrl}
+                  autoPlay
+                  muted
+                  playsInline
+                  loop={false}
+                  controls={false}
+                  className="w-full h-auto object-cover"
+                  onEnded={(e) => {
+                    // 不做任何操作，让视频停留在最后一帧
+                  }}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          )}
+          
+          {/* 文章内容 */}
+          <div className="max-w-4xl mx-auto">
+            {news.content.map((paragraph, index) => {
+              // 第一段落特殊处理，与原型图一致
+              if (index === 0) {
+                return (
+                  <p key={index} className="text-lg mb-10 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+              // 第二段落特殊处理，与原型图一致
+              else if (index === 1) {
+                return (
+                  <p key={index} className="text-lg mb-10 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+              // 第三段落特殊处理，引用样式，与原型图一致
+              else if (index === 2) {
+                return (
+                  <div key={index} className="mb-16">
+                    <blockquote className="text-2xl font-medium text-center mb-4 max-w-3xl mx-auto leading-relaxed">
+                      {paragraph}
+                    </blockquote>
+                  </div>
+                );
+              }
+              // 其他段落正常处理
+              else {
+                return (
+                  <p key={index} className="text-lg mb-6 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+            })}
+            
+            {/* 只在有作者信息时显示作者部分 */}
+            {news.author && (
+              <p className="text-center text-gray-600 mt-8 mb-16">{news.author}</p>
+            )}
+          </div>
+          
+          {/* 文章底部空白区域 */}
+          <div className="h-32 md:h-40"></div>
+        </>
+      );
+    }
+    
     // 如果有视频布局配置，使用视频布局
     if (news.videoLayout) {
       const videoLayout = news.videoLayout; // 使用临时变量避免类型检查错误
@@ -181,21 +280,56 @@ export function NewsPage() {
             </div>
           )}
           
-          {/* 文章内容 */}
-          <div className="max-w-4xl mx-auto">
-            {news.content.map((paragraph, index) => {
-              return (
+          {/* 检查是否有两列布局配置 */}
+          {news.twoColumnLayout ? (
+            <div className="max-w-6xl mx-auto px-4 md:px-8">
+              <div className="flex flex-col md:flex-row gap-10 md:gap-24">
+                {/* 左侧内容列 */}
+                <div className="w-full md:w-3/5">
+                  {news.twoColumnLayout.leftColumnContent.map((paragraph, index) => (
+                    <p key={index} className="text-lg mb-8 leading-relaxed text-gray-800">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+                
+                {/* 右侧引用列 */}
+                <div className="w-full md:w-2/5">
+                  <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
+                    <blockquote className="text-xl italic mb-4 leading-relaxed text-gray-700">
+                      {news.twoColumnLayout.quoteContent}
+                    </blockquote>
+                    {news.twoColumnLayout.quoteAuthor && (
+                      <p className="text-right text-gray-600 font-medium">- {news.twoColumnLayout.quoteAuthor}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              {/* 底部内容 */}
+              {news.twoColumnLayout.bottomContent && (
+                <div className="mt-16 mb-8">
+                  <p className="text-lg leading-relaxed text-gray-800">
+                    {news.twoColumnLayout.bottomContent}
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* 如果没有两列布局配置，使用普通内容布局 */
+            <div className="max-w-4xl mx-auto">
+              {news.content.map((paragraph, index) => (
                 <p key={index} className="text-lg mb-8 leading-relaxed">
                   {paragraph}
                 </p>
-              );
-            })}
-            
-            {/* 只在有作者信息时显示作者部分 */}
-            {news.author && (
-              <p className="text-right text-gray-600 mt-10 mb-16">{news.author}</p>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
+          
+          {/* 只在有作者信息时显示作者部分 */}
+          {news.author && !news.twoColumnLayout && (
+            <p className="text-right text-gray-600 mt-10 mb-16 max-w-4xl mx-auto">{news.author}</p>
+          )}
           
           {/* 文章底部空白区域 */}
           <div className="h-32 md:h-40"></div>
@@ -265,14 +399,18 @@ export function NewsPage() {
     // 如果有特殊布局配置，使用特殊布局
     if (news.specialLayout) {
       const specialLayout = news.specialLayout; // 使用临时变量避免类型检查错误
+      
+      // 检查是否是第五篇文章（Officially Established）
+      const isOfficiallyEstablished = news.id === '5';
+      
       return (
         <>
           {/* 日期和标题部分 */}
-          <div className="mb-16 text-center">
+          <div className={`${isOfficiallyEstablished ? 'mb-24' : 'mb-16'} text-center`}>
             <div className="text-gray-600 mb-6">
               {specialLayout.location}-{specialLayout.date}
             </div>
-            <h1 className="text-5xl md:text-6xl font-medium mb-12 tracking-tight">
+            <h1 className={`${isOfficiallyEstablished ? 'text-5xl md:text-6xl' : 'text-5xl md:text-6xl'} font-medium mb-12 tracking-tight`}>
               {specialLayout.fullTitle.split('<br />').map((line, i) => (
                 <span key={i}>
                   {line}
@@ -280,14 +418,16 @@ export function NewsPage() {
                 </span>
               ))}
             </h1>
-            <div className="max-w-2xl mx-auto text-center space-y-4">
-              {specialLayout.highlights.map((highlight, index) => (
-                <p key={index} className="text-lg">{highlight}</p>
-              ))}
-            </div>
+            {specialLayout.highlights && specialLayout.highlights.length > 0 && (
+              <div className="max-w-2xl mx-auto text-center space-y-4">
+                {specialLayout.highlights.map((highlight, index) => (
+                  <p key={index} className="text-lg">{highlight}</p>
+                ))}
+              </div>
+            )}
           </div>
           
-          {/* 顶部大图 - 更大的尺寸 */}
+          {/* 顶部大图 - 更大的尺寸，仅当有图片时显示 */}
           {news.images && news.images.length > 0 && (
             <div className="w-full mb-20 max-w-6xl mx-auto">
               <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
@@ -303,6 +443,17 @@ export function NewsPage() {
           {/* 文章内容 */}
           <div className="max-w-4xl mx-auto">
             {news.content.map((paragraph, index) => {
+              // 第五篇文章的特殊处理
+              if (isOfficiallyEstablished) {
+                // 所有段落都作为普通正文处理，不再对第三段特殊处理
+                return (
+                  <p key={index} className={`text-lg ${index < news.content.length - 1 ? 'mb-8' : 'mb-16'} leading-relaxed`}>
+                    {paragraph}
+                  </p>
+                );
+              }
+              
+              // 其他文章的处理逻辑
               // 第一段落特殊处理，与原型图一致
               if (index === 0) {
                 return (
@@ -341,7 +492,42 @@ export function NewsPage() {
                 );
               }
             })}
+            
+            {/* 只在有作者信息时显示作者部分，且不是第五篇文章的第三段引用 */}
+            {news.author && !isOfficiallyEstablished && (
+              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
+            )}
+            
+            {/* 第五篇文章的作者信息 */}
+            {news.author && isOfficiallyEstablished && (
+              <p className="text-right text-gray-600 mt-8 mb-16">{news.author}</p>
+            )}
           </div>
+          
+          {/* 第五篇文章的Core Business部分 */}
+          {isOfficiallyEstablished && news.coreBusinessLayout && (
+            <div className="w-full max-w-4xl mx-auto mt-32 mb-16">
+              {/* Core Business标题 */}
+              <div className="text-center mb-16">
+                <h2 className="text-5xl font-normal mb-0 leading-none tracking-tight">
+                  {news.coreBusinessLayout.title}
+                </h2>
+                <h2 className="text-5xl font-normal tracking-tight">
+                  {news.coreBusinessLayout.subtitle}
+                </h2>
+              </div>
+              
+              {/* 只保留图片，去掉卡片样式和下方内容 */}
+              <div className="w-full max-w-4xl mx-auto">
+                {/* 卡片图片 */}
+                <img 
+                  src={news.coreBusinessLayout.cardImageUrl} 
+                  alt={news.coreBusinessLayout.cardImageAlt} 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          )}
           
           {/* 文章底部空白区域 */}
           <div className="h-32 md:h-40"></div>
@@ -362,8 +548,8 @@ export function NewsPage() {
           
           {news.content.map((paragraph, index) => (
             <p key={index} className="text-lg mb-6 leading-relaxed max-w-4xl mx-auto">
-              {paragraph}
-            </p>
+          {paragraph}
+        </p>
           ))}
           
           {/* 文章底部空白区域 */}
@@ -395,11 +581,11 @@ export function NewsPage() {
       result.push(
         <div key={`img-default-${firstBannerImage.url}`} className="w-full mb-10 max-w-5xl mx-auto">
           <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl image-container">
-            <img 
+          <img 
               src={firstBannerImage.url} 
-              alt={firstBannerImage.alt} 
+            alt={firstBannerImage.alt} 
               className="w-full h-auto object-cover"
-            />
+          />
           </div>
         </div>
       );
@@ -429,9 +615,9 @@ export function NewsPage() {
                 className="w-full h-auto object-cover"
               />
             </div>
-          </div>
-        );
-      });
+            </div>
+          );
+        });
     });
     
     // 添加文章底部空白区域
@@ -799,6 +985,20 @@ blockquote::after {
   
   .mb-4 {
     margin-bottom: 1rem !important;
+  }
+  
+  /* 调整移动设备上的两列布局 */
+  .flex-col.md\:flex-row .w-full.md\:w-3\/5,
+  .flex-col.md\:flex-row .w-full.md\:w-2\/5 {
+    width: 100% !important;
+    margin-bottom: 2rem;
+  }
+  
+  /* 调整移动设备上的引用块样式 */
+  .bg-gray-50.p-8 {
+    padding: 1.5rem !important;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 }
 `;

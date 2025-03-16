@@ -172,6 +172,126 @@ export interface MapComparisonLayout {
 }
 
 /**
+ * Video with special layout configuration for news items with video and special content layout
+ * 视频+特殊布局配置，用于带视频和特殊内容布局的新闻项目
+ */
+export interface VideoWithSpecialLayout {
+  /**
+   * Location where the news was published
+   * 新闻发布的地点
+   */
+  location: string;
+  
+  /**
+   * Formatted date for display
+   * 用于显示的格式化日期
+   */
+  date: string;
+  
+  /**
+   * Full title for the news item
+   * 新闻项目的完整标题
+   */
+  fullTitle: string;
+  
+  /**
+   * Highlight points to display
+   * 要显示的重点内容
+   */
+  highlights: string[];
+}
+
+/**
+ * Two column layout configuration for news items with two column content
+ * 两列布局配置，用于带两列内容的新闻项目
+ */
+export interface TwoColumnLayout {
+  /**
+   * Main content paragraphs for the left column
+   * 左侧列的主要内容段落
+   */
+  leftColumnContent: string[];
+  
+  /**
+   * Quote content for the right column
+   * 右侧列的引用内容
+   */
+  quoteContent: string;
+  
+  /**
+   * Quote author for the right column
+   * 右侧列引用的作者
+   */
+  quoteAuthor?: string;
+  
+  /**
+   * Bottom content paragraph after the two columns
+   * 两列布局下方的内容段落
+   */
+  bottomContent?: string;
+}
+
+/**
+ * Core Business layout configuration for news items with business card section
+ * 核心业务布局配置，用于带业务卡片部分的新闻项目
+ */
+export interface CoreBusinessLayout {
+  /**
+   * Title of the core business section
+   * 核心业务部分的标题
+   */
+  title: string;
+  
+  /**
+   * Subtitle of the core business section
+   * 核心业务部分的副标题
+   */
+  subtitle: string;
+  
+  /**
+   * Image URL for the business card
+   * 业务卡片的图片URL
+   */
+  cardImageUrl: string;
+  
+  /**
+   * Alternative text for the business card image
+   * 业务卡片图片的替代文本
+   */
+  cardImageAlt: string;
+  
+  /**
+   * Card title (IT Solutions)
+   * 卡片标题（IT解决方案）
+   */
+  cardTitle: string;
+  
+  /**
+   * Overview section title
+   * 概览部分标题
+   */
+  overviewTitle: string;
+  
+  /**
+   * Overview section content
+   * 概览部分内容
+   */
+  overviewContent: string;
+  
+  /**
+   * Expertise section title
+   * 专业知识部分标题
+   */
+  expertiseTitle: string;
+  
+  /**
+   * Expertise section content
+   * 专业知识部分内容
+   */
+  expertiseContent: string;
+}
+
+/**
  * News item interface
  * 新闻项目接口
  */
@@ -195,32 +315,32 @@ export interface NewsItem {
   title: string;
   
   /**
+   * Summary of the news item
+   * 新闻项目的摘要
+   */
+  summary: string;
+  
+  /**
    * Content paragraphs of the news item
    * 新闻项目的内容段落
    */
   content: string[];
   
   /**
-   * Author of the news item
-   * 新闻项目的作者
+   * Optional author of the news item
+   * 新闻项目的可选作者
    */
   author?: string;
   
   /**
-   * Brief summary of the news item
-   * 新闻项目的简短摘要
-   */
-  summary: string;
-  
-  /**
-   * Optional array of images associated with the news item
-   * 与新闻项目关联的可选图片数组
+   * Optional images for the news item
+   * 新闻项目的可选图片
    */
   images?: NewsImage[];
   
   /**
-   * Optional array of videos associated with the news item
-   * 与新闻项目关联的可选视频数组
+   * Optional videos for the news item
+   * 新闻项目的可选视频
    */
   videos?: NewsVideo[];
   
@@ -247,4 +367,22 @@ export interface NewsItem {
    * 可选的地图比较布局配置
    */
   mapComparisonLayout?: MapComparisonLayout;
+  
+  /**
+   * Optional video with special layout configuration
+   * 可选的视频+特殊布局配置
+   */
+  videoWithSpecialLayout?: VideoWithSpecialLayout;
+  
+  /**
+   * Optional two column layout configuration
+   * 可选的两列布局配置
+   */
+  twoColumnLayout?: TwoColumnLayout;
+  
+  /**
+   * Optional core business layout configuration
+   * 可选的核心业务布局配置
+   */
+  coreBusinessLayout?: CoreBusinessLayout;
 } 

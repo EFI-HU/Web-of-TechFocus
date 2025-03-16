@@ -101,10 +101,10 @@ export const newsData: NewsItem[] = [
     title: 'Electric Bus',
     summary: 'DOE grant funds development of tools to help transit agencies optimize electric bus deployment and operations.',
     content: [
-      'Boulder, CO – [2020.1.4] – TechFocus has been awarded a $1.75 million grant from the U.S. Department of Energy (DOE) in 2020 to develop innovative planning and operational tools for electric bus deployment. The funding, granted through the DOE\'s Funding Opportunity Announcement (FOA), marks a major milestone in TechFocus\'s mission to support sustainable transportation solutions.',
-      'The project aims to assist transit agencies in transitioning to electric buses by leveraging real-world implementation and validation strategies. The tools developed under this initiative will help agencies optimize deployment strategies, improve energy efficiency, and enhance the overall operation of electric transit fleets.',
-      '"Electrification of public transportation is a key component of reducing carbon emissions and fostering a greener future," said Dr. Wang. "Through this project, we are providing transit agencies with the necessary tools and data-driven strategies to make informed decisions."',
-      'The initiative aligns with TechFocus\'s broader mission to develop sustainable and high-impact technological solutions. With the funding secured, the company is poised to revolutionize the way transit agencies implement electric bus fleets, ensuring an efficient and cost-effective transition.'
+      'In its latest innovation, TechFocus has successfully enhanced the energy efficiency of freight movement in smart cities by developing an intelligent transportation platform. The platform provides real-time decision-making capabilities for transportation system operators, optimizing freight movement while reducing energy consumption.',
+      'The newly developed system leverages AI-driven analytics and multi-modal logistics integration to enhance transportation efficiency across various freight networks. The platform is designed to streamline routes, predict demand patterns, and minimize fuel consumption, ensuring a greener and more cost-effective urban freight ecosystem.',
+      '"As cities grow and logistics demands increase, there is a pressing need for smarter, more efficient freight movement strategies," said Dr. Wang. "Our platform not only reduces operational costs but also plays a crucial role in lowering environmental impact."',
+      'This milestone reflects TechFocus\'s commitment to sustainability and innovation in urban transportation, reinforcing its position as a leader in intelligent transportation solutions.'
     ],
     author: 'TechFocus Media Team',
     videos: [
@@ -119,6 +119,18 @@ export const newsData: NewsItem[] = [
       location: 'Boulder, CO',
       date: 'January 4, 2020',
       fullTitle: 'We Receives $1.75M DOE Grant for Electric Bus Planning Tools'
+    },
+    // 添加视频+特殊布局配置，结合视频和第一篇文章的特殊布局
+    videoWithSpecialLayout: {
+      location: 'Boulder, CO',
+      date: 'January 4, 2020',
+      fullTitle: 'We Receives $1.75M DOE Grant for Electric Bus Planning Tools',
+      highlights: [
+        'Development of innovative planning tools for electric bus deployment.',
+        'Real-world implementation and validation strategies for transit agencies.',
+        'Optimization of deployment strategies and energy efficiency.',
+        'Enhancement of overall operation of electric transit fleets.'
+      ]
     }
   },
   {
@@ -127,11 +139,30 @@ export const newsData: NewsItem[] = [
     title: 'Officially Established',
     summary: 'New company launches to deliver cutting-edge technology solutions for federal agencies and commercial clients.',
     content: [
-      'Boulder, CO – [2017.3.1] – A new era of IT solutions has begun with the launch of TechFocus, a company committed to delivering cutting-edge technology solutions to federal agencies and commercial clients. Established on [exact founding date in 2017], TechFocus has rapidly emerged as a leader in IT modernization, artificial intelligence, machine learning, cloud computing, and data science.',
+      'A new era of IT solutions has begun with the launch of TechFocus, a company committed to delivering cutting-edge technology solutions to federal agencies and commercial clients. Established on [exact founding date in 2017], TechFocus has rapidly emerged as a leader in IT modernization, artificial intelligence, machine learning, cloud computing, and data science.',
       'Founded by a team of highly skilled professionals, 75% of whom hold advanced degrees, TechFocus was created to bridge the gap between emerging technologies and mission-critical applications. With a strong emphasis on cybersecurity, cloud computing, and AI-driven solutions, the company is uniquely positioned to help organizations navigate the complexities of digital transformation.',
       '"We recognized a growing need for highly specialized technology solutions that could seamlessly integrate into existing infrastructures while improving operational efficiency," said Dr. Lijuan Wang, a key figure behind the company\'s inception. "TechFocus is built on a foundation of expertise, research, and real-world implementation, making us a reliable partner for businesses and government agencies alike."',
       'Since its launch, TechFocus has worked extensively with federal institutions, contributing to AI-driven projects, cloud migration initiatives, and cutting-edge machine learning applications. As the company moves forward, it remains dedicated to innovation, efficiency, and sustainability in IT solutions.'
     ],
-    author: 'TechFocus Media Team'
+    author: 'TechFocus Media Team',
+    // 添加特殊布局配置，与原型图一致
+    specialLayout: {
+      location: 'Boulder, CO',
+      date: 'March 1, 2017',
+      fullTitle: 'TechFocus Officially Established to Drive Innovation in IT Solutions',
+      highlights: []
+    },
+    // 添加核心业务布局配置，用于底部的Core Business部分
+    coreBusinessLayout: {
+      title: 'Core',
+      subtitle: 'Business',
+      cardImageUrl: '/news/core_business.jpg',
+      cardImageAlt: 'IT Solutions business card',
+      cardTitle: 'IT Solutions',
+      overviewTitle: 'Overview',
+      overviewContent: 'IT modernization, AI, machine learning, cloud computing, data science.',
+      expertiseTitle: 'Core Expertise',
+      expertiseContent: 'Integrating emerging technologies with mission-critical applications, operational efficiency, cybersecurity.'
+    }
   }
 ]; 
