@@ -14,6 +14,7 @@
  * @component
  */
 
+import { FloatingChat } from '@/components/shared';
 import { Header } from "@/components/shared/header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -22,26 +23,24 @@ import "./globals.css";
 // Initialize Geist Sans font with Latin subset
 // 初始化 Geist Sans 字体，使用拉丁字符集
 const geistSans = Geist({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
 });
 
 // Initialize Geist Mono font with Latin subset
 // 初始化 Geist Mono 字体，使用拉丁字符集
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
 });
 
 // Define global metadata for the application
 // 定义应用程序的全局元数据
 export const metadata: Metadata = {
   title: "TechFocus",
-  description: "TechFocus是一家专注于IT驱动的集体智能解决方案的公司",
-  icons: {
-    icon: '/logo-removebg-preview.png',
-    apple: '/logo-removebg-preview.png',
-  },
+  description: "TechFocus official website",
 };
 
 /**
@@ -54,16 +53,17 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
         <Header />
         {children}
+        <FloatingChat />
       </body>
     </html>
   );

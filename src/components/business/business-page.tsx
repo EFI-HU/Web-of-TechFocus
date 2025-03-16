@@ -103,21 +103,14 @@ export function BusinessPage() {
     // 滚动到对应部分
     const element = sectionRefs[id as keyof typeof sectionRefs]?.current;
     if (element) {
-      const headerOffset = 100; // 设置偏移量，考虑到顶部导航栏的高度
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
   
   // 监听滚动事件，根据滚动位置更新选中的导航项
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120; // 增加偏移量，使导航更自然
+      const scrollPosition = window.scrollY + 100; // 添加一些偏移量，使导航更自然
       
       // 检查每个部分的位置
       const sections = Object.entries(sectionRefs);
