@@ -215,21 +215,17 @@ export function Header() {
             
             {/* 桌面端导航 */}
             <nav className="hidden md:flex items-center gap-8 pr-16">
-              <Link href="/news" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/news" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity">
                 News
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/business" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/business" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity">
                 Business
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/contact" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/contact" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity">
                 Contact
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/career" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/career" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity">
                 Career
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
                 href="/federal" 

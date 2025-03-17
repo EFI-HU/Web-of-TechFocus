@@ -140,8 +140,7 @@ export function WhyUsSection() {
                   </svg>
                 </div>
                 <span className="relative font-medium text-gray-700">
-                  Read more
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-700 transition-all duration-300 group-hover:w-full group-hover:bg-black"></span>
+                  Learn more
                 </span>
               </Link>
             </motion.div>

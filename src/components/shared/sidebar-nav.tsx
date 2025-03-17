@@ -70,9 +70,6 @@ export function SidebarNav({ items, selectedId, onSelect, title }: SidebarNavPro
                   >
                     {item.title}
                   </span>
-                  <span className="absolute right-2 opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
-                    &gt;
-                  </span>
                 </button>
               );
             })}
@@ -89,15 +86,6 @@ export function SidebarNav({ items, selectedId, onSelect, title }: SidebarNavPro
             className="flex items-center space-x-1 text-gray-700 pr-4"
           >
             <span className="text-sm">{selectedItem.title}</span>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
           </button>
         </div>
         
