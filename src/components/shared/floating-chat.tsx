@@ -75,10 +75,10 @@ export function FloatingChat() {
         className="bg-[#F7F7F7] rounded-full shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-shadow duration-200"
         style={{
           transformOrigin: 'center',
-          width: '15rem',
+          width: '16rem',
         }}
         animate={{
-          width: isExpanded ? '32rem' : '15rem',
+          width: isExpanded ? '28rem' : '16rem',
         }}
         transition={{
           type: "spring",
@@ -126,4 +126,4 @@ export function FloatingChat() {
       </motion.div>
     </motion.div>
   );
-} 
+}

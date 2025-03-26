@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: ../
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ../:/app  # 挂载本地目录到容器，实现代码热更新
+      - /app/node_modules  # 避免覆盖容器内的node_modules
+    command: npm run dev 
