@@ -16,6 +16,7 @@
 
 import { FloatingChat } from '@/components/shared';
 import { Header } from "@/components/shared/header";
+import Footer from "@/components/shared/Bottom";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -64,6 +65,7 @@ export default function RootLayout({
         <Header />
         {children}
         <FloatingChat />
+        <Footer />
       </body>
     </html>
   );

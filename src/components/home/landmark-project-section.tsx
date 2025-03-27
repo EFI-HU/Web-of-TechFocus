@@ -175,34 +175,22 @@ export function LandmarkProjectSection() {
             
             <h3 className="text-2xl font-bold text-black">DOE-Funded Electric Bus Deployment Initiative</h3>
             
-            <p className="detail-text-lg leading-relaxed">
-              Led a $1.75M DOE-funded project (2020) to develop innovative planning tools and validated strategies for transit agencies transitioning to electric buses, ensuring scalable and cost-effective implementation.
+            <p className="text-[14px] text-[#1C2B33] leading-relaxed" style={{ fontFamily: 'Roboto', lineHeight: '1.5', letterSpacing: '0em', fontWeight: 500, textAlign: 'justify' }}>
+              Led a $1.75M DOE - funded project (2020) to develop innovative planning tools and validated strategies for transit agencies transitioning to electric buses, ensuring scalable and cost the effective implemen-tation.
             </p>
             
             <ul className="space-y-4 mt-4">
               <li className="flex items-start">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-black flex items-center justify-center mt-1 mr-3">
-                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </span>
-                <span className="detail-text-lg">Reduced operational costs by 35%</span>
+                <span className="flex-shrink-0 w-2 h-2 rounded-full bg-black mt-3 mr-3"></span>
+                <span className="text-[14px] text-[#1C2B33] leading-relaxed" style={{ fontFamily: 'Roboto', lineHeight: '1.5', letterSpacing: '0em', fontWeight: 500, textAlign: 'justify' }}>Reduced operational costs by 35%</span>
               </li>
               <li className="flex items-start">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-black flex items-center justify-center mt-1 mr-3">
-                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </span>
-                <span className="detail-text-lg">Decreased carbon emissions by 60%</span>
+                <span className="flex-shrink-0 w-2 h-2 rounded-full bg-black mt-3 mr-3"></span>
+                <span className="text-[14px] text-[#1C2B33] leading-relaxed" style={{ fontFamily: 'Roboto', lineHeight: '1.5', letterSpacing: '0em', fontWeight: 500, textAlign: 'justify' }}>Decreased carbon emissions by 60%</span>
               </li>
               <li className="flex items-start">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-black flex items-center justify-center mt-1 mr-3">
-                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </span>
-                <span className="detail-text-lg">Implemented in 12 transit agencies nationwide</span>
+                <span className="flex-shrink-0 w-2 h-2 rounded-full bg-black mt-3 mr-3"></span>
+                <span className="text-[14px] text-[#1C2B33] leading-relaxed" style={{ fontFamily: 'Roboto', lineHeight: '1.5', letterSpacing: '0em', fontWeight: 500, textAlign: 'justify' }}>Implemented in 12 transit agencies nationwide</span>
               </li>
             </ul>
             
@@ -210,25 +198,30 @@ export function LandmarkProjectSection() {
               className="mt-8"
             >
               <Link 
-                href="/projects" 
-                className="inline-flex items-center group"
+                href="/projects"
+                className="group inline-flex items-center text-[#1C2B33]"
               >
-                <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-gray-400 mr-3 text-gray-700 transition-colors duration-300 group-hover:bg-black group-hover:text-white">
+                <div className="flex items-center justify-center w-[20px] h-[20px] mr-2 rounded-full border-2 border-[#1C2B33] group-hover:bg-[#1C2B33] group-hover:text-white transition-colors duration-300">
                   <svg 
-                    className="w-5 h-5" 
-                    xmlns="http://www.w3.org/2000/svg" 
+                    width="10" 
+                    height="10" 
                     viewBox="0 0 24 24" 
                     fill="none" 
+                    className="transition-colors duration-300 group-hover:fill-white" 
                     stroke="currentColor" 
-                    strokeWidth="2" 
+                    strokeWidth="4" 
                     strokeLinecap="round" 
-                    strokeLinejoin="round"
+                    strokeLinejoin="round" 
                   >
-                    <path d="M5 12h14" />
-                    <path d="M12 5l7 7-7 7" />
+                    <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </div>
-                <span className="relative font-medium text-gray-700">
+                <span className="text-[16px] font-['Roboto'] text-[#1C2B33]" 
+                  style={{ 
+                    letterSpacing: '-0.005em', 
+                    fontWeight: 600, 
+                    lineHeight: 1.4 
+                  }}>
                   Learn more
                 </span>
               </Link>
@@ -238,4 +231,4 @@ export function LandmarkProjectSection() {
       </motion.div>
     </section>
   );
-} 
+}

@@ -8,15 +8,20 @@ export function Hero() {
           {/* 左侧文本内容 - 向右移动一点 */}
           <div className="lg:w-5/12 flex flex-col gap-8 pl-0 md:pl-6 lg:pl-12">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-              Together,<br />
-              <span className="text-black whitespace-nowrap">let's forge the future</span>
+              Together, <span className="text-black" style={{ whiteSpace: 'nowrap' }}>We Shape the Future</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Our mission is Rebooting human governance systems 
-              with IT-driven collective intelligence. We want to 
-              empower every client through world. We firmly 
-              believe: Less is more.
-            </p>
+            <span style={{ 
+              fontSize: '18px', 
+              lineHeight: 1.5, 
+              color: '#1C2B33', 
+              fontFamily: 'Roboto', 
+              fontWeight: 500,
+              textAlign: 'justify',
+              display: 'inline-block',
+              width: '100%'
+            }}>
+              We empower government agencies with IT-driven intelligence, delivering secure, efficient, and scalable solutions that enhance public sector operations and digital transformation. We believe: Innovation thrives in simplicity.
+            </span>
           </div>
           
           {/* 右侧网络图形 - 放大一些并向右移动 */}
@@ -36,4 +41,4 @@ export function Hero() {
       </div>
     </section>
   );
-} 
+}

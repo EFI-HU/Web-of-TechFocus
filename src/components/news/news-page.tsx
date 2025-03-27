@@ -63,7 +63,7 @@ export function NewsPage() {
           {/* 第一屏：顶部日期 */}
           <div className="mb-8 text-center">
             <div className="text-gray-600">
-              {imageLayout?.location}-{imageLayout?.date}
+              {imageLayout?.location} {imageLayout?.date}
             </div>
           </div>
           
@@ -146,7 +146,7 @@ export function NewsPage() {
           {/* 日期和标题部分 */}
           <div className="mb-16 text-center">
             <div className="text-gray-600 mb-6">
-              {videoSpecialLayout.location}-{videoSpecialLayout.date}
+              {videoSpecialLayout.location} {videoSpecialLayout.date}
             </div>
             <h1 className="text-5xl md:text-6xl font-medium mb-12 tracking-tight">
               {videoSpecialLayout.fullTitle.split('<br />').map((line, i) => (
@@ -240,7 +240,7 @@ export function NewsPage() {
           {/* 日期和标题部分 */}
           <div className="mb-16 text-center">
             <div className="text-gray-600 mb-6">
-              {videoLayout.location}-{videoLayout.date}
+              {videoLayout.location} {videoLayout.date}
             </div>
             <h1 className="text-5xl md:text-6xl font-medium mb-16 tracking-tight">
               {videoLayout.fullTitle}
@@ -330,7 +330,7 @@ export function NewsPage() {
           {/* 顶部日期 */}
           <div className="mb-8 text-center">
             <div className="text-gray-600">
-              {imageLayout.location}-{imageLayout.date}
+              {imageLayout.location} {imageLayout.date}
             </div>
           </div>
           
@@ -388,7 +388,7 @@ export function NewsPage() {
           {/* 日期和标题部分 */}
           <div className={`${isOfficiallyEstablished ? 'mb-24' : 'mb-16'} text-center`}>
             <div className="text-gray-600 mb-6">
-              {specialLayout.location}-{specialLayout.date}
+              {specialLayout.location} {specialLayout.date}
             </div>
             <h1 className={`${isOfficiallyEstablished ? 'text-5xl md:text-6xl' : 'text-5xl md:text-6xl'} font-medium mb-12 tracking-tight`}>
               {specialLayout.fullTitle.split('<br />').map((line, i) => (

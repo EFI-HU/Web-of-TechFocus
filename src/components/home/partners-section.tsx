@@ -161,7 +161,7 @@ export function PartnersSection() {
               <h3 className="text-2xl md:text-3xl font-bold mb-3 relative">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-800">Certifications</span>
               </h3>
-              <p className="mt-4 text-gray-600 text-center max-w-2xl text-base md:text-xl">
+              <p className="mt-4 text-[#1C2B33] text-justify max-w-2xl text-[14px] font-medium leading-[1.5] tracking-[0em] font-roboto">
                 As a certified woman-owned and economically disadvantaged small business, we are recognized by federal and state agencies for our commitment to diversity and inclusion in government contracting.
               </p>
             </div>
@@ -232,9 +232,7 @@ export function PartnersSection() {
               <h3 className="text-2xl md:text-3xl font-bold mb-3 relative">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-800">Government Partners</span>
               </h3>
-              <p className="mt-4 text-gray-600 text-center max-w-2xl text-xl">
-                We proudly collaborate with these government agencies to deliver innovative solutions.
-              </p>
+              <p className="mt-4 text-[#1C2B33] text-[14px] md:text-[16px] font-medium tracking-tight font-roboto whitespace-normal md:whitespace-nowrap px-4 md:px-0 text-center md:text-left">We proudly collaborate with these government agencies to deliver innovative solutions.</p>
             </div>
           </div>
         </motion.div>
@@ -291,4 +289,4 @@ export function PartnersSection() {
       `}</style>
     </section>
   );
-} 
+}
