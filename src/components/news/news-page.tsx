@@ -4,6 +4,7 @@ import { newsData } from '@/data/news-data';
 import { NewsItem } from '@/types/news';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { Content, ContentItem } from '@/components/shared/sidebar-nav';
 
 // 定义导航项类型
 interface NavItem {
@@ -619,41 +620,16 @@ export function NewsPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col md:flex-row overflow-hidden">
-      {/* 桌面端左侧导航栏 - 在移动端隐藏 */}
-      <div className="hidden md:block w-64 min-h-screen flex-shrink-0">
-        <div className="fixed top-0 left-0 h-screen w-64 flex flex-col justify-center items-start">
-          <div className="w-full pl-8 py-4 max-h-[80vh] overflow-y-auto scrollbar-hide">
-            <nav className="flex flex-col space-y-6">
-              {newsData.map((news) => {
-                const isActive = news.id === selectedNewsId;
-                
-                return (
-                  <button
-                    key={news.id}
-                    onClick={() => setSelectedNewsId(news.id)}
-                    className="text-base py-2 px-3 rounded transition-all duration-300 ease-in-out hover:bg-gray-100 text-left relative group flex items-center w-full"
-                  >
-                    <span 
-                      className="transition-all duration-300 ease-in-out"
-                      style={{ 
-                        fontWeight: isActive ? 600 : 400,
-                        color: isActive ? '#000000' : '#AAAAAA',
-                        opacity: isActive ? 1 : 0.85,
-                        transform: isActive ? 'scale(1.02)' : 'scale(1)'
-                      }}
-                    >
-                      {news.title}
-                    </span>
-                    <span className="absolute right-2 opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
-                      &gt;
-                    </span>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
-      </div>
+      {/* 使用新的Content组件作为桌面端侧边栏 */}
+      <Content 
+        items={newsData.map(news => ({
+          id: news.id,
+          title: news.title
+        }))}
+        selectedId={selectedNewsId}
+        onSelect={(id) => setSelectedNewsId(id)}
+        title="News"
+      />
       
       {/* 移动端顶部导航栏 - 在桌面端隐藏 */}
       <div className="md:hidden bg-white shadow-sm w-full">
