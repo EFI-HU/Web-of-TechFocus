@@ -172,7 +172,7 @@ export function Header() {
         <header className="w-full py-4 bg-white transition-all duration-500">
           <div className="flex justify-between items-center px-0 mx-auto">
             {/* 左侧LOGO */}
-            <div className="flex-shrink-0 relative z-[999] pl-4 md:pl-8">
+            <div className="flex-shrink-0 relative z-[999] pl-4 md:pl-8" style={{ marginLeft: '-6px' }}>
               <Link href="/" className="flex items-center gap-2">
                 {/* 公司Logo - 尺寸已增加 */}
                 <div className="relative w-60 h-16">

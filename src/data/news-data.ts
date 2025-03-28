@@ -136,7 +136,7 @@ export const newsData: NewsItem[] = [
   {
     id: '5',
     date: '2017-03-01',
-    title: 'Officially Established',
+    title: 'Established',
     summary: 'New company launches to deliver cutting-edge technology solutions for federal agencies and commercial clients.',
     content: [
       'A new era of IT solutions has begun with the launch of TechFocus, a company committed to delivering cutting-edge technology solutions to federal agencies and commercial clients. Established on [exact founding date in 2017], TechFocus has rapidly emerged as a leader in IT modernization, artificial intelligence, machine learning, cloud computing, and data science.',
@@ -149,7 +149,7 @@ export const newsData: NewsItem[] = [
     specialLayout: {
       location: 'Boulder, CO',
       date: 'March 1, 2017',
-      fullTitle: 'TechFocus Officially Established to Drive Innovation in IT Solutions',
+      fullTitle: 'TechFocus Established to Drive Innovation in IT Solutions',
       highlights: []
     },
     // 添加核心业务布局配置，用于底部的Core Business部分
