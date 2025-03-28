@@ -1,141 +1,123 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 // 定义导航项类型
+export interface ContentItem {
+  id: string;
+  title: string;
+  href?: string;
+}
+
+interface ContentProps {
+  items: ContentItem[];
+  selectedId?: string;
+  onSelect?: (id: string) => void;
+  title: string;
+}
+
+export function Content({ items, selectedId, onSelect, title }: ContentProps) {
+  const [activeId, setActiveId] = useState<string>(selectedId || (items[0]?.id || ''));
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // 处理选择项目
+  const handleSelect = (id: string) => {
+    setActiveId(id);
+    if (onSelect) {
+      onSelect(id);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedId && selectedId !== activeId) {
+      setActiveId(selectedId);
+    }
+  }, [selectedId, activeId]);
+
+  return (
+    <div 
+      ref={contentRef}
+      className="hidden md:block" // 在平板电脑尺寸以下隐藏
+      style={{
+        width: 'calc(12.5% + 40px)', // 占据1.5列栅格(1.5/12 = 12.5%)加上左侧页边距40px
+        marginLeft: '0',
+        paddingLeft: '40px', // 左侧页边距
+        boxSizing: 'border-box',
+      }}
+    >
+      <div className="sticky pt-6 pb-10" style={{ top: '25vh' }}>
+        <nav className="flex flex-col space-y-2">
+          {items.map((item) => {
+            const isActive = item.id === activeId;
+            
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => handleSelect(item.id)}
+                className="text-base py-2 px-3 rounded transition-all duration-300 ease-in-out hover:bg-gray-100 text-left relative group flex items-center w-full"
+                whileHover={{ x: 3 }}
+                transition={{ duration: 0.2 }}
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <span 
+                  className="transition-all duration-300 ease-in-out flex items-center"
+                  style={{ 
+                    fontWeight: isActive ? 700 : 400,
+                    color: isActive ? '#000000' : '#666666',
+                    opacity: isActive ? 1 : 0.85,
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '14px',
+                    letterSpacing: '0.01em',
+                    lineHeight: '1.2', // 调整行高
+                    paddingTop: '1px', // 微调文本位置
+                  }}
+                >
+                  {item.title}
+                </span>
+                {isActive && (
+                  <motion.span 
+                    className="absolute left-0 bg-blue-600 rounded-full"
+                    layoutId="activeIndicator"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    style={{ 
+                      left: '-10px', 
+                      width: '4px',
+                      height: '16px', // 略微调大高度
+                      top: 'calc(50% - 8px)', // 向上偏移8px (原来的5px + 新增的3px)
+                      transform: 'translateY(-50%)' 
+                    }}
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+// 为了兼容现有代码，保留原始接口定义，但重命名为NavItem
 export interface NavItem {
   id: string;
   title: string;
 }
 
-interface SidebarNavProps {
+// 为了兼容现有代码，保留原始组件名称和接口，但内部使用新的Content组件
+export function SidebarNav({ items, selectedId, onSelect, title }: {
   items: NavItem[];
   selectedId: string;
   onSelect: (id: string) => void;
   title: string;
-}
-
-export function SidebarNav({ items, selectedId, onSelect, title }: SidebarNavProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+}) {
+  // 将NavItem数组转换为ContentItem数组
+  const contentItems = items.map(item => ({
+    id: item.id,
+    title: item.title
+  }));
   
-  const selectedItem = items.find(item => item.id === selectedId) || items[0];
-  
-  // 移动端导航栏项
-  const MobileNavItem = ({ item }: { item: NavItem }) => {
-    const isActive = item.id === selectedId;
-    
-    return (
-      <button
-        key={item.id}
-        onClick={() => {
-          onSelect(item.id);
-          setIsMobileMenuOpen(false);
-        }}
-        className={`py-3 px-4 text-sm transition-all duration-300 ease-in-out ${
-          isActive 
-            ? 'bg-gray-100 text-black font-medium' 
-            : 'text-gray-600 hover:bg-gray-50'
-        } text-center whitespace-nowrap`}
-      >
-        {item.title}
-      </button>
-    );
-  };
-
-  return (
-    <>
-      {/* 桌面端导航栏 */}
-      <div className="w-full h-full flex flex-col">
-        <div className="w-full pl-8 py-4">
-          <nav className="flex flex-col space-y-6">
-            {items.map((item) => {
-              const isActive = item.id === selectedId;
-              
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSelect(item.id)}
-                  className="text-base py-2 px-3 rounded transition-all duration-300 ease-in-out hover:bg-gray-100 text-left relative group flex items-center w-full"
-                >
-                  <span 
-                    className="transition-all duration-300 ease-in-out"
-                    style={{ 
-                      fontWeight: isActive ? 600 : 400,
-                      color: isActive ? '#000000' : '#AAAAAA',
-                      opacity: isActive ? 1 : 0.85,
-                      transform: isActive ? 'scale(1.02)' : 'scale(1)'
-                    }}
-                  >
-                    {item.title}
-                  </span>
-                  <span className="absolute right-2 opacity-0 transform translate-x-[-10px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
-                    &gt;
-                  </span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
-      
-      {/* 移动端导航栏 */}
-      <div className="md:hidden">
-        <div className="flex justify-between items-center px-0 py-3">
-          <div className="text-lg font-medium pl-4">{title}</div>
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="flex items-center space-x-1 text-gray-700 pr-4"
-          >
-            <span className="text-sm">{selectedItem.title}</span>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-        
-        {/* 移动端下拉菜单 */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              ref={mobileMenuRef}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <div className="overflow-x-auto scrollbar-hide">
-                <div className="flex py-2 px-4 space-x-2 min-w-max">
-                  {items.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        onSelect(item.id);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`py-3 px-4 text-sm transition-all duration-300 ease-in-out ${
-                        item.id === selectedId 
-                          ? 'bg-gray-100 text-black font-medium' 
-                          : 'text-gray-600 hover:bg-gray-50'
-                      } text-center whitespace-nowrap`}
-                    >
-                      {item.title}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
-  );
+  return <Content items={contentItems} selectedId={selectedId} onSelect={onSelect} title={title} />;
 } 
