@@ -141,11 +141,11 @@ export function PartnersSection() {
         >
           {/* 标题前装饰元素 */}
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-[2px] bg-gradient-to-r from-[#9333EA] to-[#6366F1]"></div>
+            <div className="w-16 h-[2px] bg-gradient-to-r from-black to-gray-800"></div>
           </div>
           
           <h2 className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#111] to-[#9333EA]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#111] to-black">
               Partners & Certifications
             </span>
           </h2>
@@ -159,9 +159,9 @@ export function PartnersSection() {
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col items-center mb-16">
               <h3 className="text-2xl md:text-3xl font-bold mb-3 relative">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9333EA] to-[#6366F1]">Certifications</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-800">Certifications</span>
               </h3>
-              <p className="mt-4 text-gray-600 text-center max-w-2xl text-base md:text-xl">
+              <p className="mt-4 text-[#1C2B33] text-justify max-w-2xl text-[14px] font-medium leading-[1.5] tracking-[0em] font-roboto">
                 As a certified woman-owned and economically disadvantaged small business, we are recognized by federal and state agencies for our commitment to diversity and inclusion in government contracting.
               </p>
             </div>
@@ -208,11 +208,11 @@ export function PartnersSection() {
 
                   {/* Hover Effect Ring */}
                   <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-purple-200/0"
+                    className="absolute inset-0 rounded-full border-2 border-gray-200/0"
                     initial={false}
                     animate={{
                       scale: hoveredLogo === logo.id ? 1.1 : 1,
-                      borderColor: hoveredLogo === logo.id ? "rgba(167, 139, 250, 0.3)" : "rgba(167, 139, 250, 0)",
+                      borderColor: hoveredLogo === logo.id ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0)",
                     }}
                     transition={{ duration: 0.2 }}
                   />
@@ -230,11 +230,9 @@ export function PartnersSection() {
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col items-center mb-16">
               <h3 className="text-2xl md:text-3xl font-bold mb-3 relative">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9333EA] to-[#6366F1]">Government Partners</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-800">Government Partners</span>
               </h3>
-              <p className="mt-4 text-gray-600 text-center max-w-2xl text-xl">
-                We proudly collaborate with these government agencies to deliver innovative solutions.
-              </p>
+              <p className="mt-4 text-[#1C2B33] text-[14px] md:text-[16px] font-medium tracking-tight font-roboto whitespace-normal md:whitespace-nowrap px-4 md:px-0 text-center md:text-left">We proudly collaborate with these government agencies to deliver innovative solutions.</p>
             </div>
           </div>
         </motion.div>
@@ -291,4 +289,4 @@ export function PartnersSection() {
       `}</style>
     </section>
   );
-} 
+}

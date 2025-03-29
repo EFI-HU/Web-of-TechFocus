@@ -11,14 +11,14 @@
 - **联系我们 (Contact)**: 联系表单和联系信息
 - **招聘 (Career)**: 职位列表和申请入口
 - **新闻 (News)**: 公司新闻和动态
-
+哈哈哈哈哈我们去抓水母
 ## 技术栈
 
 - **前端框架**: React + Next.js (App Router)
 - **UI组件库**: shadcn/ui (基于Tailwind CSS)
 - **样式**: Tailwind CSS
 - **类型检查**: TypeScript
-- **动画**: dotLottie (用于高质量矢量动画)
+- **动画**: dotLottie (用于高质量矢量动画)、framer-motion (用于页面过渡和滚动动画)
 - **内容管理**: Ghost (用于新闻和博客内容)
 - **表单处理**: Tally.so (用于联系表单和职位申请)
 - **后端**: Next.js API Routes (用于集成第三方服务)
@@ -46,6 +46,7 @@ enterprise-website/
 │   │   ├── business/        # 业务页面
 │   │   ├── contact/         # 联系页面
 │   │   ├── career/          # 招聘页面
+│   │   │   └── page.tsx     # 招聘页面主组件
 │   │   ├── layout.tsx       # 根布局
 │   │   ├── page.tsx         # 主页
 │   │   └── globals.css      # 全局样式
@@ -59,16 +60,100 @@ enterprise-website/
 │   │   ├── business/        # 业务页面组件
 │   │   ├── contact/         # 联系页面组件
 │   │   ├── career/          # 招聘页面组件
+│   │   │   ├── hero-section.tsx # 招聘页面第一屏
+│   │   │   ├── content-section.tsx # 招聘页面第二屏及以下内容
+│   │   │   └── index.ts     # 招聘组件导出
 │   │   ├── news/            # 新闻页面组件
 │   │   │   └── news-page.tsx # 新闻页面主组件
 │   │   └── shared/          # 共享组件
 │   │       └── header.tsx   # 页头组件
+│   ├── data/                # 数据文件
+│   │   └── news-data.ts     # 新闻数据
 │   ├── lib/                 # 工具函数和库
 │   │   ├── utils.ts         # 通用工具函数
 │   │   ├── wordpress.ts     # WordPress/Ghost API集成
 │   │   └── tally.ts         # Tally.so API集成
 │   └── types/               # 类型定义
+│       └── news.ts          # 新闻相关类型定义
 └── ...
+```
+
+## 新闻数据模型
+
+新闻页面支持两种数据模型：
+
+### 1. 标准新闻模型
+
+标准新闻项包含以下字段：
+- `id`: 唯一标识符
+- `date`: 发布日期
+- `title`: 标题
+- `summary`: 摘要
+- `content`: 内容段落数组
+- `author`: 作者
+- `images`: 可选的图片数组
+
+### 2. 特殊布局新闻模型
+
+特殊布局新闻项除了包含标准字段外，还包含一个额外的 `specialLayout` 字段，用于自定义布局：
+- `location`: 发布地点
+- `date`: 格式化日期（用于显示）
+- `fullTitle`: 完整标题（可包含换行标记 `<br />`）
+- `highlights`: 重点内容数组
+
+### 图片数据结构
+
+```typescript
+interface NewsImage {
+  url: string;        // 图片URL
+  alt: string;        // 图片替代文本 
+  type: 'banner' | 'square'; // 图片类型
+  position?: number;  // 可选，图片在内容中的位置（段落索引，从1开始）
+}
+```
+
+### 使用示例
+
+新闻数据存储在 `src/data/news-data.ts` 文件中，使用 TypeScript 接口确保类型安全。新闻组件会自动从该文件加载数据并渲染。
+
+```typescript
+// 标准新闻项示例
+{
+  id: '2',
+  date: '2023-05-03',
+  title: 'Smart Cities',
+  summary: '新的AI驱动平台优化城市货运，减少能源消耗和运营成本。',
+  content: [
+    '第一段内容...',
+    '第二段内容...'
+  ],
+  author: 'TechFocus Media Team',
+  images: [
+    {
+      url: '/news/smart-freight.jpg',
+      alt: '智能货运系统',
+      type: 'banner',
+      position: 1  // 放在第1段落后面
+    }
+  ]
+}
+
+// 特殊布局新闻项示例
+{
+  id: '1',
+  // 标准字段...
+  specialLayout: {
+    location: 'Boulder, CO',
+    date: 'March 21, 2025',
+    fullTitle: 'We Launches New<br />Website to Enhance<br />Customer Engagement',
+    highlights: [
+      '现代化、易于导航的界面。',
+      '展示成功项目的案例研究。',
+      '行业新闻和研究的专用资源中心。',
+      'TechFocus IT解决方案和服务的详细见解。'
+    ]
+  }
+}
 ```
 
 ## 新闻图片模型
@@ -120,6 +205,40 @@ interface NewsItem {
   ]
 }
 ```
+
+## 招聘页面设计
+
+招聘页面采用了现代化的设计，分为两个主要部分：
+
+### 1. 第一屏 - 视觉冲击区 (HeroSection)
+
+- **设计风格**: 现代简约，带有精致的装饰元素
+- **背景**: 高质量的背景图片，展示公司文化和工作环境
+- **内容**: 简洁有力的标题和副标题，突出公司的价值主张
+- **交互**: 滚动指示器，引导用户向下滚动查看更多内容
+
+### 2. 第二屏及以下 - 详细信息区域 (ContentSection)
+
+- **布局**: 左侧固定导航栏 + 右侧内容区域，类似飞书文档风格
+- **导航**: 章节目录，支持快速跳转到不同部分
+- **内容结构**:
+  - 关于我们：公司简介
+  - 我们的文化：公司文化和价值观
+  - 福利待遇：员工福利详情
+  - 职业发展：职业成长路径
+  - 职位空缺：当前开放职位列表
+- **交互效果**:
+  - 滚动时导航栏自动固定在顶部
+  - 滚动时自动高亮当前阅读章节
+  - 点击导航可平滑滚动到对应章节
+  - 第二屏随滚动从底部滑入，覆盖第一屏
+
+### 技术实现
+
+- **滚动覆盖效果**: 使用 framer-motion 的 useScroll 和 useTransform 钩子实现第二屏随滚动从底部滑入覆盖第一屏的效果
+- **响应式设计**: 结合使用相对定位的容器和绝对定位的内容区，保证在不同屏幕尺寸上都能正确显示
+- **导航交互**: 使用 React 的 useEffect 和 DOM API 监听滚动位置，更新活动章节
+- **内容组织**: 使用 TypeScript 接口定义内容数据结构，便于后期与 CMS 集成
 
 ## 开发计划
 
@@ -197,16 +316,35 @@ interface NewsItem {
   - 添加两种固定尺寸的图片模型（banner和square）
   - 支持在文章内容中的指定位置插入图片
   - 优化图片展示效果，添加圆角和阴影
+- 实现业务页面
+  - 创建核心业务部分组件
+  - 创建软件项目展示部分组件
+  - 创建硬件产品展示部分组件
+  - 实现产品分类和筛选功能
+  - 添加动画效果和交互功能
+- 实现招聘页面
+  - 创建第一屏视觉冲击区组件(HeroSection)
+  - 创建第二屏及以下详细信息区域组件(ContentSection)
+  - 实现飞书文档风格的左侧导航 + 右侧内容布局
+  - 实现滚动时导航栏自动固定功能
+  - 实现滚动时自动高亮当前阅读章节功能
+  - 实现点击导航平滑滚动到对应章节功能
+  - 实现第二屏随滚动从底部滑入覆盖第一屏的效果
+  - 优化移动端和桌面端的响应式布局
+- 新闻数据管理优化
+  - 创建独立的新闻数据文件 (news-data.ts)
+  - 定义清晰的类型接口 (news.ts)
+  - 支持特殊布局配置
+  - 实现数据与UI的分离，提高代码可维护性
 
 ### 进行中
 - 完善首页其他部分
 - 实现页脚组件
 - 开发Ghost API集成，支持从CMS获取新闻内容和图片
-- 实现联系页面和Tally.so表单集成
 
 ### 待完成
-- 实现业务页面
-- 实现招聘页面和Tally.so职位申请集成
+- 实现联系页面和Tally.so表单集成
+- 实现招聘页面的Tally.so职位申请集成
 - 实现WordPress/Ghost内容集成
 - 部署上线
 

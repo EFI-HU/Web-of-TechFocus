@@ -1,0 +1,28 @@
+# 使用Node.js 20作为基础镜像
+FROM node:20-alpine
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制package文件
+COPY package.json package-lock.json ./
+
+# 设置npm镜像源为淘宝源并安装依赖
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm install --legacy-peer-deps
+
+# 复制项目文件
+COPY . .
+
+# 构建应用
+RUN npm run build
+
+# 设置环境变量
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+# 暴露端口
+EXPOSE 3000
+
+# 启动命令
+CMD ["npm", "run", "dev"] 

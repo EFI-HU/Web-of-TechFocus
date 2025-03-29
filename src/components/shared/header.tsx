@@ -4,19 +4,40 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Orbitron } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import { Button } from '../ui/button';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import { useRouter } from 'next/navigation';
 
 // 初始化字体
 const orbitron = Orbitron({ subsets: ['latin'], display: 'swap' });
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleMenuClose = () => {
+    toggleMenu();
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    // 切换body的overflow样式
+    if (!isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   };
+
+  // 组件卸载时恢复body样式
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   // 菜单项动画变体
   const menuVariants = {
@@ -53,11 +74,11 @@ export function Header() {
 
   // 在组件顶部添加 menuItems 数组（在 Header 组件内，useState 下方）
   const menuItems = [
-    { href: '/', label: '首页' },
-    { href: '/news', label: '新闻动态' },
-    { href: '/business', label: '业务范围' },
-    { href: '/contact', label: '联系我们' },
-    { href: '/career', label: '加入我们' },
+    { href: '/news', label: 'News' },
+    { href: '/business', label: 'Solutions' },
+    { href: '/contact', label: 'Contact' },
+    { href: '/career', label: 'Career' },
+    { href: '/federal', label: 'Government' },
   ];
 
   return (
@@ -66,64 +87,64 @@ export function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* 背景遮罩 */}
+            {/* 添加一个全屏遮罩层来阻止背景交互 */}
+            <div 
+              className="fixed inset-0 w-full h-screen bg-transparent md:hidden pointer-events-auto" 
+              style={{ zIndex: 996 }}
+            />
+            {/* 背景遮罩和菜单面板合并为一个全屏组件 */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm md:hidden"
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="fixed inset-0 w-full h-screen bg-white/95 backdrop-blur-sm md:hidden"
               style={{ zIndex: 998 }}
-              onClick={toggleMenu}
-            />
-            {/* 菜单面板 */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed top-0 right-0 w-[66.666667%] h-screen bg-black md:hidden"
-              style={{ zIndex: 999 }}
+              onClick={handleMenuClose}
             >
               <motion.nav
-                className="flex flex-col h-full pt-16"
+                className="flex flex-col h-full pt-24 w-full"
                 variants={menuVariants}
                 initial="closed"
                 animate="open"
                 exit="closed"
               >
-                {menuItems.map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    variants={{
-                      open: {
-                        y: 0,
-                        opacity: 1,
-                        transition: {
-                          delay: index * 0.1,
-                          duration: 0.5,
-                          ease: [0.4, 0, 0.2, 1]
+                <div className="w-full" onClick={(e) => e.stopPropagation()}>
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={item.href}
+                      variants={{
+                        open: {
+                          y: 0,
+                          opacity: 1,
+                          transition: {
+                            delay: index * 0.1,
+                            duration: 0.5,
+                            ease: [0.4, 0, 0.2, 1]
+                          }
+                        },
+                        closed: {
+                          y: 20,
+                          opacity: 0
                         }
-                      },
-                      closed: {
-                        y: 20,
-                        opacity: 0
-                      }
-                    }}
-                    className="relative"
-                  >
-                    <Link 
-                      href={item.href} 
-                      className={`block py-4 pr-8 text-right text-lg font-medium text-white hover:text-[#9333EA] transition-colors duration-200`}
-                      onClick={toggleMenu}
+                      }}
+                      className="relative"
                     >
-                      {item.label}
-                    </Link>
-                    {index !== menuItems.length - 1 && (
-                      <div className="absolute bottom-0 right-0 w-full h-[1px] bg-white/10" />
-                    )}
-                  </motion.div>
-                ))}
+                      <Link 
+                        href={item.href} 
+                        className={`block py-4 pr-8 text-right text-2xl font-medium text-black hover:text-gray-600 transition-colors duration-200 ${
+                          item.href === '/federal' ? 'font-bold' : ''
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleMenu();
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
               </motion.nav>
             </motion.div>
           </>
@@ -149,90 +170,58 @@ export function Header() {
         calcHeightOnResize={true}
       >
         <header className="w-full py-4 bg-white transition-all duration-500">
-          <div className="flex justify-between items-center px-6 md:px-12 lg:px-16 mx-auto">
-            {/* 左侧LOGO和文字 */}
-            <div className="flex-shrink-0 relative z-[999]">
+          <div className="flex justify-between items-center px-0 mx-auto">
+            {/* 左侧LOGO */}
+            <div className="flex-shrink-0 relative z-[999] pl-4 md:pl-8" style={{ marginLeft: '-6px' }}>
               <Link href="/" className="flex items-center gap-2">
-                {/* 公司Logo */}
-                <div className="relative w-10 h-10">
+                {/* 公司Logo - 尺寸已增加 */}
+                <div className="relative w-60 h-16">
                   <Image 
-                    src="/logo-removebg-preview.png" 
-                    alt="TechFocus Logo" 
+                    src="/logoFont02.svg" 
+                    alt="Company Logo" 
                     fill
                     className="object-contain"
                     priority
                   />
                 </div>
-                <span className={`text-[23px] font-black text-[#111] tracking-wider relative inline-block uppercase ${orbitron.className}`}>
-                  TECH<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-gradient">FOCUS</span>
-                </span>
               </Link>
             </div>
             
             {/* 移动端菜单按钮 */}
-            <div className="md:hidden relative z-[999]">
+            <div className="md:hidden fixed top-4 right-4 z-[999]">
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className={`text-foreground hover:bg-transparent ${isMenuOpen ? 'text-white' : ''}`}
+                className="text-foreground hover:bg-transparent p-0 w-10 h-10"
                 onClick={toggleMenu}
               >
-                <motion.div
-                  animate={isMenuOpen ? "open" : "closed"}
-                  className="relative w-4 h-4"
-                >
-                  <motion.span
-                    className={`absolute top-0 left-0 w-4 h-[1px] ${isMenuOpen ? 'bg-white' : 'bg-black'}`}
-                    variants={{
-                      closed: { rotate: 0, y: 2 },
-                      open: { rotate: 45, y: 8 },
-                    }}
-                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                  />
-                  <motion.span
-                    className={`absolute top-2 left-0 w-4 h-[1px] ${isMenuOpen ? 'bg-white' : 'bg-black'}`}
-                    variants={{
-                      closed: { opacity: 1 },
-                      open: { opacity: 0 },
-                    }}
-                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                  />
-                  <motion.span
-                    className={`absolute top-4 left-0 w-4 h-[1px] ${isMenuOpen ? 'bg-white' : 'bg-black'}`}
-                    variants={{
-                      closed: { rotate: 0, y: 0 },
-                      open: { rotate: -45, y: -4 },
-                    }}
-                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                  />
-                </motion.div>
+                {isMenuOpen ? (
+                  <CloseIcon sx={{ fontSize: 32 }} className="text-black" />
+                ) : (
+                  <MenuIcon sx={{ fontSize: 32 }} className="text-black" />
+                )}
               </Button>
             </div>
             
             {/* 桌面端导航 */}
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/news" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+            <nav className="hidden md:flex items-center gap-8 pr-16">
+              <Link href="/news" className="text-[16px] font-medium text-[#111] hover:opacity-70 transition-opacity">
                 News
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/products" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
-                Products
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+              <Link href="/business" className="text-[16px] font-medium text-[#111] hover:opacity-70 transition-opacity">
+                Solutions
               </Link>
-              <Link href="/contact" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/contact" className="text-[16px] font-medium text-[#111] hover:opacity-70 transition-opacity">
                 Contact
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link href="/career" className="text-[16px] font-medium text-[#111] hover:opacity-100 transition-opacity relative group">
+              <Link href="/career" className="text-[16px] font-medium text-[#111] hover:opacity-70 transition-opacity">
                 Career
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
                 href="/federal" 
-                className="ml-2 px-5 py-2.5 bg-[#111] text-white rounded-full text-[16px] font-medium relative overflow-hidden group"
+                className="ml-2 px-4 py-2 bg-black text-white rounded-full text-[14px] font-medium transition-colors duration-300 hover:bg-white hover:text-black hover:border-black border border-black"
               >
-                <span className="relative z-10">Federal</span>
-                <span className="absolute inset-0 bg-[#9333EA] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0"></span>
+                Government
               </Link>
             </nav>
           </div>
@@ -240,4 +229,4 @@ export function Header() {
       </Headroom>
     </>
   );
-} 
+}
